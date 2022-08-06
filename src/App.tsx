@@ -1,9 +1,12 @@
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <div>hogehoge</div>
+    <div className="main">
+      <div className="header">SAKUMONDO</div>
+      <div className="body">
+        <span>31/31</span>
+      </div>
     </div>
   );
 }
