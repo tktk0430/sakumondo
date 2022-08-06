@@ -5,7 +5,13 @@
 }
 
 .header {
-  background-color: yellow;
+  text-align: center;
+  padding: 1rem;
+  border-bottom: 0.05rem solid hsl(0deg 50% 50%);
+}
+
+.count-container {
+  padding: 1rem;
   text-align: center;
 }
 

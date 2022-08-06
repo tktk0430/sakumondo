@@ -17,8 +17,11 @@ const Question = () => {
 
   return (
     <>
-      <div>
-        {chars.filter((c) => !c.isOpen).length}/{chars.length}
+      <div className="count-container">
+        <span style={{ fontSize: 30 }}>
+          {chars.filter((c) => !c.isOpen).length}
+        </span>
+        /{chars.length}
       </div>
       <div className="char-box-container">
         {chars.map((char, idx) => (
