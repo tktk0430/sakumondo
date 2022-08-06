@@ -1,10 +1,38 @@
 .main {
-    margin: 0 auto;
-    width: 100vw;
-    max-width: 400px;
+  margin: 0 auto;
+  width: 100vw;
+  max-width: 400px;
 }
 
 .header {
-    background-color: yellow;
-    overflow-wrap: break-word;
+  background-color: yellow;
+  text-align: center;
+}
+
+.char-box-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.char-box {
+  width: 16.66%;
+  height: 4rem;
+}
+
+.char-box-inner {
+  width: 85%;
+  height: 85%;
+  display: grid;
+  place-items: center;
+  border-radius: 0.7rem;
+}
+
+.closed {
+  background-color: hsl(0deg 50% 50%);
+  color: white;
+  cursor: pointer;
+}
+
+.open {
+  outline: 1px solid hsl(0deg 50% 50%);
 }

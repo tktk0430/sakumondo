@@ -1,11 +1,12 @@
 import "./App.css";
+import { Question } from "./Question";
 
 function App() {
   return (
     <div className="main">
       <div className="header">SAKUMONDO</div>
       <div className="body">
-        <span>31/31</span>
+        <Question />
       </div>
     </div>
   );
