@@ -1,18 +1,19 @@
-import { AnswerForm } from "./AnswerForm";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-import { Question } from "./Question";
+import Body from "./Body";
 
 function App() {
   return (
-    <div className="main">
-      <div className="header">
-        <div style={{ fontSize: "1.5rem" }}>SAKUMONDO</div>
+    <BrowserRouter>
+      <div className="main">
+        <div className="header">
+          <div style={{ fontSize: "1.5rem" }}>SAKUMONDO</div>
+        </div>
+        <div className="body">
+          <Body />
+        </div>
       </div>
-      <div className="body">
-        <Question />
-        <AnswerForm />
-      </div>
-    </div>
+    </BrowserRouter>
   );
 }
 
