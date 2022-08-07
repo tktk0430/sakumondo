@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { initialQuestion } from "./const";
 import { decode } from "./crypto";
 import { Modal } from "./Modal";
 
@@ -39,6 +40,10 @@ const SolvePage = () => {
       );
       setAnswerType(answerType);
       setAnswers(answers.split("\n"));
+    } else {
+      setChars(initialQuestion.sentence);
+      setAnswerType(initialQuestion.answerType);
+      setAnswers(initialQuestion.answers);
     }
   }, []);
 
