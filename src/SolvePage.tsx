@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./Button";
 import { initialQuestion } from "./const";
 import { decode } from "./crypto";
