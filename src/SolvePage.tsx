@@ -67,6 +67,11 @@ const SolvePage = () => {
     }
   };
 
+  const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing || e.key !== "Enter") return;
+    checkAnswer();
+  };
+
   const swithPanelOpen = () => {
     if (panelMode === "all") {
       const newChars = chars.map((v) => ({ ...v, isOpen: v.isClicked }));
@@ -128,13 +133,10 @@ const SolvePage = () => {
           className="answer-input"
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
+          onKeyDown={onEnter}
         />
         {isCorrect ? (
-          <div
-            className="post-button"
-            onClick={swithPanelOpen}
-            style={{ backgroundColor: "#7B68EE" }}
-          >
+          <div className="post-button" onClick={swithPanelOpen}>
             パネル表示切替
           </div>
         ) : (
