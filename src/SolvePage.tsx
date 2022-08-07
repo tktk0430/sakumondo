@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "./Button";
 import { initialQuestion } from "./const";
 import { decode } from "./crypto";
+import { getResult, setResult } from "./localStoraage";
 import { Modal } from "./Modal";
 import { isKatakana, isNumString } from "./validation";
 
@@ -16,22 +17,25 @@ const PANEL_MODE_TRANSITION_MAP = {
   only: "all" as const,
 };
 
+const q = new URLSearchParams(window.location.search).get("q");
+const result = getResult(q);
+
 const SolvePage = () => {
   const [chars, setChars] = useState<string[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [answerType, setAnswerType] =
     useState<keyof typeof ANSWER_TYPE_MAP>("");
   const [answer, setAnswer] = useState("");
-  const [clickedIndices, setClickedIndices] = useState<number[]>([]);
-  const [submitCount, setSubmitCount] = useState(0);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [clickedIndices, setClickedIndices] = useState<number[]>(
+    result.clickedIndices
+  );
+  const [submitCount, setSubmitCount] = useState(result.submitCount);
+  const [isCorrect, setIsCorrect] = useState<boolean>(result.isCorrect);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [panelMode, setPanelMode] =
     useState<keyof typeof PANEL_MODE_TRANSITION_MAP>("only");
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const q = params.get("q");
     if (q) {
       const { sentence, answerType, answers } = JSON.parse(decode(q));
       setChars(sentence.split(""));
@@ -43,6 +47,10 @@ const SolvePage = () => {
       setAnswers(initialQuestion.answers);
     }
   }, []);
+
+  useEffect(() => {
+    if (q) setResult(q, { isCorrect, submitCount, clickedIndices });
+  }, [isCorrect, submitCount, clickedIndices]);
 
   const openChar = (idx: number) => {
     if (isCorrect) return;
