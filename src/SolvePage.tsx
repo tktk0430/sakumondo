@@ -17,29 +17,24 @@ const PANEL_MODE_TRANSITION_MAP = {
 };
 
 const SolvePage = () => {
-  const [chars, setChars] = useState<
-    { value: string; isOpen: boolean; isClicked: boolean }[]
-  >([]);
+  const [chars, setChars] = useState<string[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [answerType, setAnswerType] =
     useState<keyof typeof ANSWER_TYPE_MAP>("");
   const [answer, setAnswer] = useState("");
+  const [clickedIndices, setClickedIndices] = useState<number[]>([]);
   const [submitCount, setSubmitCount] = useState(0);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [panelMode, setPanelMode] =
-    useState<keyof typeof PANEL_MODE_TRANSITION_MAP>("all");
+    useState<keyof typeof PANEL_MODE_TRANSITION_MAP>("only");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const q = params.get("q");
     if (q) {
       const { sentence, answerType, answers } = JSON.parse(decode(q));
-      setChars(
-        sentence
-          .split("")
-          .map((value: string) => ({ value, isOpen: false, isClicked: false }))
-      );
+      setChars(sentence.split(""));
       setAnswerType(answerType);
       setAnswers(answers.split("\n"));
     } else {
@@ -50,10 +45,15 @@ const SolvePage = () => {
   }, []);
 
   const openChar = (idx: number) => {
-    const newChars = chars.map((v, i) =>
-      i === idx ? { ...v, isOpen: true, isClicked: true } : v
-    );
-    setChars(newChars);
+    if (isCorrect) return;
+    setClickedIndices((old) => [...old, idx]);
+  };
+
+  const isOpen = (idx: number) => {
+    if (isCorrect && panelMode === "all") {
+      return true;
+    }
+    return clickedIndices.includes(idx);
   };
 
   const checkAnswer = () => {
@@ -66,27 +66,12 @@ const SolvePage = () => {
     setIsModalOpen(true);
   };
 
-  const onCloseModal = () => {
-    setIsModalOpen(false);
-    if (isCorrect) {
-      const newChars = chars.map((v) => ({ ...v, isOpen: true }));
-      setChars(newChars);
-    }
-  };
-
   const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.nativeEvent.isComposing || e.key !== "Enter") return;
+    if (e.nativeEvent.isComposing || e.key !== "Enter" || !isValid()) return;
     checkAnswer();
   };
 
   const swithPanelOpen = () => {
-    if (panelMode === "all") {
-      const newChars = chars.map((v) => ({ ...v, isOpen: v.isClicked }));
-      setChars(newChars);
-    } else {
-      const newChars = chars.map((v) => ({ ...v, isOpen: true }));
-      setChars(newChars);
-    }
     setPanelMode((mode) => PANEL_MODE_TRANSITION_MAP[mode]);
   };
 
@@ -101,6 +86,11 @@ const SolvePage = () => {
     }
   };
 
+  const onCloseModal = () => {
+    setIsModalOpen(false);
+    if (isCorrect) setPanelMode("all");
+  };
+
   return (
     <>
       <Modal isOpen={isModalOpen}>
@@ -109,7 +99,7 @@ const SolvePage = () => {
         </div>
         <div className="count-container">
           <span className="red" style={{ fontSize: "2rem" }}>
-            {chars.filter((c) => !c.isClicked).length}
+            {chars.length - clickedIndices.length}
           </span>
           /{chars.length}
         </div>
@@ -123,15 +113,15 @@ const SolvePage = () => {
       </Modal>
       <div className="count-container">
         <span className="red" style={{ fontSize: "2rem" }}>
-          {chars.filter((c) => !c.isClicked).length}
+          {chars.length - clickedIndices.length}
         </span>
         /{chars.length}
       </div>
       <div className="char-box-container">
         {chars.map((char, idx) => (
           <div className="char-box" key={idx}>
-            {char.isOpen ? (
-              <div className="char-box-inner open">{char.value}</div>
+            {isOpen(idx) ? (
+              <div className="char-box-inner open">{char}</div>
             ) : (
               <div
                 onClick={() => openChar(idx)}
