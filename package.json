@@ -2,7 +2,7 @@
   "name": "sakumondo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://tktk0430.github.io/sakumondo/",
+  "homepage": "https://www.sakumondo.com/",
   "dependencies": {
     "crypto-js": "^4.1.1",
     "react": "^18.2.0",
