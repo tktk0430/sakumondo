@@ -1,12 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { decode } from "./crypto";
 
-const EXAMPLE =
-  "ポーカーの役の一つであり、手札のスートが全て同じの場合にできる役の名前は？";
+const ANSWER_TYPE_MAP = {
+  katakana: "カタカナ",
+  number: "数字",
+  "": "",
+};
 
 const SolvePage = () => {
-  const [chars, setChars] = useState(
-    EXAMPLE.split("").map((value) => ({ value, isOpen: false }))
-  );
+  const [chars, setChars] = useState<{ value: string; isOpen: boolean }[]>([]);
+  const [answers, setAnswers] = useState<string[]>([]);
+  const [answerType, setAnswerType] =
+    useState<keyof typeof ANSWER_TYPE_MAP>("");
+  const [answer, setAnswer] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    if (q) {
+      const { sentence, answerType, answers } = JSON.parse(decode(q));
+      setChars(
+        sentence.split("").map((value: string) => ({ value, isOpen: false }))
+      );
+      setAnswerType(answerType);
+      setAnswers(answers.split("\n"));
+    }
+  }, []);
 
   const openChar = (idx: number) => {
     const newChars = chars.map((v, i) =>
@@ -40,8 +59,14 @@ const SolvePage = () => {
         ))}
       </div>
       <div>
-        <div className="answer-note">カタカナで</div>
-        <input className="answer-input" />
+        {answerType && (
+          <div className="answer-note">{ANSWER_TYPE_MAP[answerType]}で</div>
+        )}
+        <input
+          className="answer-input"
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+        />
         <div className="post-button">Answer</div>
       </div>
     </>
