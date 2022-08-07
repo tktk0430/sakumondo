@@ -1,14 +1,16 @@
 import { useState } from "react";
+import { encode } from "./crypto";
 
 const CreatePage = () => {
   const [sentence, setSentence] = useState("");
   const [answerType, setAnswerType] = useState("katakana");
   const [answers, setAnswers] = useState("");
+  const [url, setURL] = useState("");
 
   const createURL = () => {
     const data = { sentence, answerType, answers };
-    console.log(data);
-    console.log(window.location.origin);
+    const encodePath = encode(data);
+    return `${window.location.origin}/?q=${encodePath}`;
   };
 
   return (
@@ -43,9 +45,16 @@ const CreatePage = () => {
           onChange={(e) => setAnswers(e.target.value)}
         />
       </div>
-      <div className="post-button" onClick={createURL}>
+      <div className="post-button" onClick={() => setURL(createURL())}>
         作成
       </div>
+      <div>問題URL</div>
+      <textarea
+        className="create-input"
+        value={url}
+        disabled
+        placeholder="ここにURLが生成されます"
+      />
     </>
   );
 };
