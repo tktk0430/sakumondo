@@ -10,7 +10,7 @@ const CreatePage = () => {
   const createURL = () => {
     const data = { sentence, answerType, answers };
     const encodePath = encode(data);
-    return `${window.location.origin}/?q=${encodePath}`;
+    return `${window.location.href}?q=${encodePath}`;
   };
 
   return (
