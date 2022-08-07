@@ -8,6 +8,11 @@ const ANSWER_TYPE_MAP = {
   "": "",
 };
 
+const PANEL_MODE_TRANSITION_MAP = {
+  all: "only" as const,
+  only: "all" as const,
+};
+
 const SolvePage = () => {
   const [chars, setChars] = useState<
     { value: string; isOpen: boolean; isClicked: boolean }[]
@@ -19,6 +24,8 @@ const SolvePage = () => {
   const [submitCount, setSubmitCount] = useState(0);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [panelMode, setPanelMode] =
+    useState<keyof typeof PANEL_MODE_TRANSITION_MAP>("all");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -58,6 +65,17 @@ const SolvePage = () => {
       const newChars = chars.map((v) => ({ ...v, isOpen: true }));
       setChars(newChars);
     }
+  };
+
+  const swithPanelOpen = () => {
+    if (panelMode === "all") {
+      const newChars = chars.map((v) => ({ ...v, isOpen: v.isClicked }));
+      setChars(newChars);
+    } else {
+      const newChars = chars.map((v) => ({ ...v, isOpen: true }));
+      setChars(newChars);
+    }
+    setPanelMode((mode) => PANEL_MODE_TRANSITION_MAP[mode]);
   };
 
   return (
@@ -111,9 +129,19 @@ const SolvePage = () => {
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
         />
-        <div className="post-button" onClick={checkAnswer}>
-          Answer
-        </div>
+        {isCorrect ? (
+          <div
+            className="post-button"
+            onClick={swithPanelOpen}
+            style={{ backgroundColor: "#7B68EE" }}
+          >
+            パネル表示切替
+          </div>
+        ) : (
+          <div className="post-button" onClick={checkAnswer}>
+            Answer
+          </div>
+        )}
       </div>
     </>
   );
