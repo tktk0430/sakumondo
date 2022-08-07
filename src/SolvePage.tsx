@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { decode } from "./crypto";
+import { Modal } from "./Modal";
 
 const ANSWER_TYPE_MAP = {
   katakana: "カタカナ",
@@ -45,6 +46,10 @@ const SolvePage = () => {
 
   return (
     <>
+      <Modal isOpen={isCorrect !== null}>
+        <div>{isCorrect ? "正解！" : "不正解..."}</div>
+        <button onClick={() => setIsCorrect(null)}>戻る</button>
+      </Modal>
       <div className="count-container">
         <span style={{ fontSize: 30 }}>
           {chars.filter((c) => !c.isOpen).length}
@@ -79,7 +84,6 @@ const SolvePage = () => {
         <div className="post-button" onClick={checkAnswer}>
           Answer
         </div>
-        <div>{String(isCorrect)}</div>
       </div>
     </>
   );
