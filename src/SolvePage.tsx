@@ -126,6 +126,7 @@ const SolvePage = () => {
               <div
                 onClick={() => openChar(idx)}
                 className="char-box-inner closed"
+                style={{ cursor: isCorrect ? "default" : "pointer" }}
               >
                 {idx + 1}
               </div>
@@ -134,27 +135,29 @@ const SolvePage = () => {
         ))}
       </div>
       <div>
-        {answerType && (
-          <div className="answer-note">{ANSWER_TYPE_MAP[answerType]}で</div>
-        )}
-        <input
-          className="answer-input"
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
-          onKeyDown={onEnter}
-        />
         {isCorrect ? (
           <Button className="post-button" onClick={swithPanelOpen}>
             パネル表示切替
           </Button>
         ) : (
-          <Button
-            className="post-button"
-            onClick={checkAnswer}
-            disabled={!isValid()}
-          >
-            Answer
-          </Button>
+          <>
+            {answerType && (
+              <div className="answer-note">{ANSWER_TYPE_MAP[answerType]}で</div>
+            )}
+            <input
+              className="answer-input"
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              onKeyDown={onEnter}
+            />
+            <Button
+              className="post-button"
+              onClick={checkAnswer}
+              disabled={!isValid()}
+            >
+              Answer
+            </Button>
+          </>
         )}
       </div>
     </>

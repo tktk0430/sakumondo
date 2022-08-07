@@ -48,7 +48,6 @@
 .closed {
   background-color: hsl(0deg 50% 50%);
   color: white;
-  cursor: pointer;
   font-size: 130%;
 }
 
