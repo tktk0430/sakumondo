@@ -14,6 +14,7 @@ const SolvePage = () => {
   const [answerType, setAnswerType] =
     useState<keyof typeof ANSWER_TYPE_MAP>("");
   const [answer, setAnswer] = useState("");
+  const [submitCount, setSubmitCount] = useState(0);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ const SolvePage = () => {
   };
 
   const checkAnswer = () => {
+    setSubmitCount((c) => c + 1);
     if (answers.includes(answer)) {
       setIsCorrect(true);
     } else {
@@ -57,7 +59,9 @@ const SolvePage = () => {
           /{chars.length}
         </div>
         <hr />
-        <div style={{ color: "gray", textAlign: "center" }}>あと3回</div>
+        <div style={{ color: "gray", textAlign: "center" }}>
+          挑戦した回数：{submitCount}回
+        </div>
         <div className="post-button" onClick={() => setIsCorrect(null)}>
           Retry
         </div>
