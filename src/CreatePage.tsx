@@ -10,7 +10,7 @@ const CreatePage = () => {
   const createURL = () => {
     const data = { sentence, answerType, answers };
     const encodePath = encode(data);
-    return `${window.location.href}?q=${encodePath}`;
+    return `${window.location.href.split("?")[0]}?q=${encodePath}`;
   };
 
   return (
@@ -55,6 +55,17 @@ const CreatePage = () => {
         disabled
         placeholder="ここにURLが生成されます"
       />
+      <div style={{ display: "flex", justifyContent: "right" }}>
+        {url && (
+          <button
+            className="non-style-button"
+            style={{ color: "gray", textDecoration: "underline" }}
+            onClick={() => navigator.clipboard.writeText(url)}
+          >
+            Copy
+          </button>
+        )}
+      </div>
     </>
   );
 };
