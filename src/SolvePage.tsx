@@ -13,6 +13,7 @@ const SolvePage = () => {
   const [answerType, setAnswerType] =
     useState<keyof typeof ANSWER_TYPE_MAP>("");
   const [answer, setAnswer] = useState("");
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -32,6 +33,14 @@ const SolvePage = () => {
       i === idx ? { ...v, isOpen: true } : v
     );
     setChars(newChars);
+  };
+
+  const checkAnswer = () => {
+    if (answers.includes(answer)) {
+      setIsCorrect(true);
+    } else {
+      setIsCorrect(false);
+    }
   };
 
   return (
@@ -67,7 +76,10 @@ const SolvePage = () => {
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
         />
-        <div className="post-button">Answer</div>
+        <div className="post-button" onClick={checkAnswer}>
+          Answer
+        </div>
+        <div>{String(isCorrect)}</div>
       </div>
     </>
   );
