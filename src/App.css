@@ -47,7 +47,7 @@
 }
 
 .open {
-  outline: 2px solid hsl(0deg 50% 50%);
+  box-shadow: 0 0 0 2px hsl(0deg 50% 50%);
   background-color: hsl(0deg 5% 95%);
   font-size: 160%;
 }
