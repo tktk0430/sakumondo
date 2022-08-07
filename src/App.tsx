@@ -1,6 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Body from "./Body";
+import gitIcon from "./images/github.png";
 
 function App() {
   return (
@@ -11,6 +12,15 @@ function App() {
         </div>
         <div className="body">
           <Body />
+        </div>
+        <div className="external-links">
+          <a
+            href="https://github.com/tktk0430/sakumondo"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={gitIcon} alt="github link" />
+          </a>
         </div>
       </div>
     </BrowserRouter>

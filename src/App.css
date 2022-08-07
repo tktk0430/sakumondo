@@ -14,6 +14,12 @@
   margin-bottom: 1rem;
 }
 
+.external-links {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 2rem;
+}
+
 .count-container {
   padding: 1rem;
   text-align: center;
