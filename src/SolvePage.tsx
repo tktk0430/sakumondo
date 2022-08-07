@@ -9,13 +9,16 @@ const ANSWER_TYPE_MAP = {
 };
 
 const SolvePage = () => {
-  const [chars, setChars] = useState<{ value: string; isOpen: boolean }[]>([]);
+  const [chars, setChars] = useState<
+    { value: string; isOpen: boolean; isClicked: boolean }[]
+  >([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [answerType, setAnswerType] =
     useState<keyof typeof ANSWER_TYPE_MAP>("");
   const [answer, setAnswer] = useState("");
   const [submitCount, setSubmitCount] = useState(0);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -23,7 +26,9 @@ const SolvePage = () => {
     if (q) {
       const { sentence, answerType, answers } = JSON.parse(decode(q));
       setChars(
-        sentence.split("").map((value: string) => ({ value, isOpen: false }))
+        sentence
+          .split("")
+          .map((value: string) => ({ value, isOpen: false, isClicked: false }))
       );
       setAnswerType(answerType);
       setAnswers(answers.split("\n"));
@@ -32,7 +37,7 @@ const SolvePage = () => {
 
   const openChar = (idx: number) => {
     const newChars = chars.map((v, i) =>
-      i === idx ? { ...v, isOpen: true } : v
+      i === idx ? { ...v, isOpen: true, isClicked: true } : v
     );
     setChars(newChars);
   };
@@ -44,17 +49,26 @@ const SolvePage = () => {
     } else {
       setIsCorrect(false);
     }
+    setIsModalOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setIsModalOpen(false);
+    if (isCorrect) {
+      const newChars = chars.map((v) => ({ ...v, isOpen: true }));
+      setChars(newChars);
+    }
   };
 
   return (
     <>
-      <Modal isOpen={isCorrect !== null}>
+      <Modal isOpen={isModalOpen}>
         <div className="red" style={{ fontSize: "2rem", textAlign: "center" }}>
           {isCorrect ? "正解！" : "不正解..."}
         </div>
         <div className="count-container">
           <span className="red" style={{ fontSize: "2rem" }}>
-            {chars.filter((c) => !c.isOpen).length}
+            {chars.filter((c) => !c.isClicked).length}
           </span>
           /{chars.length}
         </div>
@@ -62,13 +76,13 @@ const SolvePage = () => {
         <div style={{ color: "gray", textAlign: "center" }}>
           挑戦した回数：{submitCount}回
         </div>
-        <div className="post-button" onClick={() => setIsCorrect(null)}>
-          Retry
+        <div className="post-button" onClick={onCloseModal}>
+          {isCorrect ? "Close" : "Retry"}
         </div>
       </Modal>
       <div className="count-container">
         <span className="red" style={{ fontSize: "2rem" }}>
-          {chars.filter((c) => !c.isOpen).length}
+          {chars.filter((c) => !c.isClicked).length}
         </span>
         /{chars.length}
       </div>
