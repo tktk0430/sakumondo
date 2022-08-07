@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { Button } from "./Button";
 import { initialQuestion } from "./const";
 import { decode } from "./crypto";
 import { Modal } from "./Modal";
+import { isKatakana, isNumString } from "./validation";
 
 const ANSWER_TYPE_MAP = {
   katakana: "カタカナ",
@@ -88,6 +90,17 @@ const SolvePage = () => {
     setPanelMode((mode) => PANEL_MODE_TRANSITION_MAP[mode]);
   };
 
+  const isValid = () => {
+    switch (answerType) {
+      case "katakana":
+        return isKatakana(answer);
+      case "number":
+        return isNumString(answer);
+      default:
+        return false;
+    }
+  };
+
   return (
     <>
       <Modal isOpen={isModalOpen}>
@@ -141,13 +154,17 @@ const SolvePage = () => {
           onKeyDown={onEnter}
         />
         {isCorrect ? (
-          <div className="post-button" onClick={swithPanelOpen}>
+          <Button className="post-button" onClick={swithPanelOpen}>
             パネル表示切替
-          </div>
+          </Button>
         ) : (
-          <div className="post-button" onClick={checkAnswer}>
+          <Button
+            className="post-button"
+            onClick={checkAnswer}
+            disabled={!isValid()}
+          >
             Answer
-          </div>
+          </Button>
         )}
       </div>
     </>
