@@ -22,5 +22,7 @@ jobs:
         uses: actions/setup-node@v3
       - name: build
         run: npm i && npm run gh_pages_build
+      - name: add CNAME
+        run: mv CNAME docs/CNAME
       - name: push
         run: git push -f --set-upstream origin gh-pages
