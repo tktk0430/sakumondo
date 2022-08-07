@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { Button } from "./Button";
 import { encode } from "./crypto";
+import { isKatakana, isNumString } from "./validation";
 
+const MAX_SENTENCE_LENGTH = 60;
 const CreatePage = () => {
   const [sentence, setSentence] = useState("");
   const [answerType, setAnswerType] = useState("katakana");
@@ -13,10 +16,29 @@ const CreatePage = () => {
     return `${window.location.href.split("?")[0]}?q=${encodePath}`;
   };
 
+  const isValid = () => {
+    if (
+      sentence.length > MAX_SENTENCE_LENGTH ||
+      sentence.length === 0 ||
+      answers.length === 0
+    ) {
+      return false;
+    }
+    const answersArr = answers.split("\n").filter((v) => v !== "");
+    switch (answerType) {
+      case "katakana":
+        return answersArr.every(isKatakana);
+      case "number":
+        return answersArr.every(isNumString);
+      default:
+        return false;
+    }
+  };
+
   return (
     <>
       <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="sentence">問題文</label>
+        <label htmlFor="sentence">問題文 ({MAX_SENTENCE_LENGTH}字まで)</label>
         <textarea
           id="sentence"
           className="create-input"
@@ -45,16 +67,25 @@ const CreatePage = () => {
           onChange={(e) => setAnswers(e.target.value)}
         />
       </div>
-      <div className="post-button" onClick={() => setURL(createURL())}>
+      <Button
+        className="post-button"
+        onClick={() => setURL(createURL())}
+        disabled={!isValid()}
+      >
         作成
+      </Button>
+      <div
+        style={{
+          marginTop: "1rem",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          {url}
+        </a>
       </div>
-      <div>問題URL</div>
-      <textarea
-        className="create-input"
-        value={url}
-        disabled
-        placeholder="ここにURLが生成されます"
-      />
       <div style={{ display: "flex", justifyContent: "right" }}>
         {url && (
           <button
