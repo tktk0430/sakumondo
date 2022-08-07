@@ -25,4 +25,4 @@ jobs:
       - name: add CNAME
         run: mv CNAME docs/CNAME
       - name: push
-        run: git push -f --set-upstream origin gh-pages
+        run: npm run git

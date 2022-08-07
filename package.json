@@ -20,8 +20,8 @@
     "eject": "react-scripts eject",
     "rm": "rm -rf docs",
     "mv": "mv build docs",
-    "git": "git add . && git commit -m deploy",
-    "gh_pages_build": "npm run rm && npm run build && npm run mv && npm run git"
+    "git": "git add . && git commit -m deploy && git push --set-upstream origin gh-pages",
+    "gh_pages_build": "npm run rm && npm run build && npm run mv"
   },
   "eslintConfig": {
     "extends": [
