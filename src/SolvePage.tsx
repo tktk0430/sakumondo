@@ -47,11 +47,23 @@ const SolvePage = () => {
   return (
     <>
       <Modal isOpen={isCorrect !== null}>
-        <div>{isCorrect ? "正解！" : "不正解..."}</div>
-        <button onClick={() => setIsCorrect(null)}>戻る</button>
+        <div className="red" style={{ fontSize: "2rem", textAlign: "center" }}>
+          {isCorrect ? "正解！" : "不正解..."}
+        </div>
+        <div className="count-container">
+          <span className="red" style={{ fontSize: "2rem" }}>
+            {chars.filter((c) => !c.isOpen).length}
+          </span>
+          /{chars.length}
+        </div>
+        <hr />
+        <div style={{ color: "gray", textAlign: "center" }}>あと3回</div>
+        <div className="post-button" onClick={() => setIsCorrect(null)}>
+          Retry
+        </div>
       </Modal>
       <div className="count-container">
-        <span style={{ fontSize: 30 }}>
+        <span className="red" style={{ fontSize: "2rem" }}>
           {chars.filter((c) => !c.isOpen).length}
         </span>
         /{chars.length}

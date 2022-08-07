@@ -4,6 +4,9 @@
   max-width: 400px;
 }
 
+.red {
+  color: hsl(0deg 50% 50%);
+}
 .header {
   text-align: center;
   padding: 1rem;
