@@ -7,7 +7,12 @@ const Body = () => {
   const [isSolving, setIsSolving] = useState(true);
   return (
     <>
-      {isSolving ? <SolvePage /> : <CreatePage />}
+      <div style={{ display: isSolving ? "block" : "none" }}>
+        <SolvePage />
+      </div>
+      <div style={{ display: isSolving ? "none" : "block" }}>
+        <CreatePage />
+      </div>
       <div
         className="change-mode-button"
         onClick={() => setIsSolving(!isSolving)}
