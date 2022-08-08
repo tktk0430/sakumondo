@@ -4,8 +4,15 @@ import { Modal } from "components/Modal";
 import gitIcon from "images/github.png";
 import { useState } from "react";
 
+const isVisted = () => {
+  const v = localStorage.getItem("isVisited");
+  setTimeout(() => localStorage.setItem("isVisited", "true"), 500);
+  return !!v;
+};
+
 const Footer = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(!isVisted());
+
   return (
     <>
       <Flex justifyContent="center" margin={{ t: 1 }}>
@@ -28,7 +35,7 @@ const Footer = () => {
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
-        style={{ content: { height: "18rem" } }}
+        style={{ content: { height: "20rem" } }}
       >
         <div className="red" style={{ fontSize: "2rem", textAlign: "center" }}>
           遊び方
@@ -45,9 +52,9 @@ const Footer = () => {
         </ol>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
-            className="red-button"
             onClick={() => setIsModalOpen(false)}
             width="middle"
+            color="red"
           >
             閉じる
           </Button>
