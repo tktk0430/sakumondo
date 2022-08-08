@@ -1,26 +1,21 @@
 import { BrowserRouter } from "react-router-dom";
 import "App.css";
 import { Main } from "pages/Main";
-import gitIcon from "images/github.png";
+import { Header } from "pages/Header";
+import { Footer } from "pages/Footer";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="main">
         <div className="header">
-          <div style={{ fontSize: "1.5rem" }}>SAKUMONDO</div>
+          <Header />
         </div>
         <div className="body">
           <Main />
         </div>
-        <div className="external-links">
-          <a
-            href="https://github.com/tktk0430/sakumondo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img src={gitIcon} alt="github link" />
-          </a>
+        <div className="footer">
+          <Footer />
         </div>
       </div>
     </BrowserRouter>
