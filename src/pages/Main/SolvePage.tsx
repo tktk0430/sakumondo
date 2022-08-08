@@ -101,9 +101,11 @@ const SolvePage = () => {
         <div style={{ color: "gray", textAlign: "center" }}>
           挑戦した回数：{submitCount}回
         </div>
-        <Button width="middle" color="red" onClick={onCloseModal}>
-          {isCorrect ? "Close" : "Retry"}
-        </Button>
+        <Flex justifyContent="center" margin={{ t: 1 }}>
+          <Button width="middle" color="red" onClick={onCloseModal}>
+            {isCorrect ? "Close" : "Retry"}
+          </Button>
+        </Flex>
       </Modal>
       <div className="count-container">
         <span className="red" style={{ fontSize: "2rem" }}>
