@@ -18,9 +18,9 @@ const modal_style: ReactModal.Styles = {
 };
 
 const Modal = (props: ReactModal.Props) => {
-  const { isOpen, children } = props;
+  const { children } = props;
   return (
-    <ReactModal isOpen={isOpen} style={modal_style}>
+    <ReactModal {...props} style={modal_style}>
       {children}
     </ReactModal>
   );

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { CreatePage } from "pages/CreatePage";
-import { SolvePage } from "pages/SolvePage";
+import { CreatePage } from "pages/Main/CreatePage";
+import { SolvePage } from "pages/Main/SolvePage";
 
 const Main = () => {
   const [isSolving, setIsSolving] = useState(true);

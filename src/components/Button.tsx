@@ -4,14 +4,14 @@ type TButtonProps = React.DetailedHTMLProps<
 > & { disabled?: boolean };
 
 const Button = (props: TButtonProps) => {
-  const { className, disabled, children, onClick } = props;
+  const { className, disabled, children, onClick, ...restProps } = props;
   const innerCN = `${className} ${disabled && "disabled"}`;
   const innerOnClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (disabled) return;
     onClick?.(e);
   };
   return (
-    <div className={innerCN} onClick={innerOnClick}>
+    <div className={innerCN} onClick={innerOnClick} {...restProps}>
       {children}
     </div>
   );
