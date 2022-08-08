@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "components/Button";
 import { encode } from "utils/crypto";
 import { isKatakana, isNumString } from "utils/validation";
+import { Flex } from "components/Flex";
 
 const MAX_SENTENCE_LENGTH = 60;
 const CreatePage = () => {
@@ -67,13 +68,16 @@ const CreatePage = () => {
           onChange={(e) => setAnswers(e.target.value)}
         />
       </div>
-      <Button
-        className="post-button"
-        onClick={() => setURL(createURL())}
-        disabled={!isValid()}
-      >
-        作成
-      </Button>
+      <Flex justifyContent="center">
+        <Button
+          color="red"
+          width="middle"
+          onClick={() => setURL(createURL())}
+          disabled={!isValid()}
+        >
+          作成
+        </Button>
+      </Flex>
       <div
         style={{
           marginTop: "1rem",
@@ -86,7 +90,7 @@ const CreatePage = () => {
           {url}
         </a>
       </div>
-      <div style={{ display: "flex", justifyContent: "right" }}>
+      <Flex justifyContent="right">
         {url && (
           <button
             className="non-style-button"
@@ -96,7 +100,7 @@ const CreatePage = () => {
             Copy
           </button>
         )}
-      </div>
+      </Flex>
     </>
   );
 };

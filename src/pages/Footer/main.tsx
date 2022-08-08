@@ -1,4 +1,5 @@
 import { Button } from "components/Button";
+import { Flex } from "components/Flex";
 import { Modal } from "components/Modal";
 import gitIcon from "images/github.png";
 import { useState } from "react";
@@ -7,21 +8,14 @@ const Footer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
-      <div
-        className="flex-center"
-        style={{
-          marginTop: "1rem",
-          textDecoration: "underline",
-          textUnderlineOffset: "0.2rem",
-        }}
-      >
+      <Flex justifyContent="center" margin={{ t: 1 }}>
         <Button
           style={{ cursor: "pointer" }}
           onClick={() => setIsModalOpen(true)}
         >
           遊び方
         </Button>
-      </div>
+      </Flex>
       <div className="external-links">
         <a
           href="https://github.com/tktk0430/sakumondo"
@@ -50,7 +44,11 @@ const Footer = () => {
           </li>
         </ol>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <Button className="red" onClick={() => setIsModalOpen(false)}>
+          <Button
+            className="red-button"
+            onClick={() => setIsModalOpen(false)}
+            width="middle"
+          >
             閉じる
           </Button>
         </div>

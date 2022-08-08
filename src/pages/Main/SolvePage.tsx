@@ -4,6 +4,7 @@ import { getResult, setResult } from "utils/localStorage";
 import { Modal } from "components/Modal";
 import { isKatakana, isNumString } from "utils/validation";
 import { convertQueryToQuestion } from "utils/convertQueryToQuestion";
+import { Flex } from "components/Flex";
 
 const ANSWER_TYPE_MAP = {
   katakana: "カタカナ",
@@ -100,9 +101,9 @@ const SolvePage = () => {
         <div style={{ color: "gray", textAlign: "center" }}>
           挑戦した回数：{submitCount}回
         </div>
-        <div className="post-button" onClick={onCloseModal}>
+        <Button width="middle" color="red" onClick={onCloseModal}>
           {isCorrect ? "Close" : "Retry"}
-        </div>
+        </Button>
       </Modal>
       <div className="count-container">
         <span className="red" style={{ fontSize: "2rem" }}>
@@ -129,7 +130,7 @@ const SolvePage = () => {
       </div>
       <div>
         {isCorrect ? (
-          <Button className="post-button" onClick={swithPanelOpen}>
+          <Button width="middle" color="red" onClick={swithPanelOpen}>
             パネル表示切替
           </Button>
         ) : (
@@ -145,13 +146,17 @@ const SolvePage = () => {
               onChange={(e) => setAnswer(e.target.value)}
               onKeyDown={onEnter}
             />
-            <Button
-              className="post-button"
-              onClick={checkAnswer}
-              disabled={!isValid()}
-            >
-              Answer
-            </Button>
+            <Flex justifyContent="center">
+              <Button
+                width="middle"
+                color="red"
+                onClick={checkAnswer}
+                disabled={!isValid()}
+                margin={{ t: 0.5 }}
+              >
+                Answer
+              </Button>
+            </Flex>
           </>
         )}
       </div>
