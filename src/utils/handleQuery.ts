@@ -18,7 +18,7 @@ export const convertQueryToQuestion = (
       return {
         sentence: sentence.split(""),
         answerType,
-        answers,
+        answers: answers.split("\n"),
       };
     } catch {
       return initialQuestion;
