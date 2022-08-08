@@ -14,7 +14,12 @@ export const convertQueryToQuestion = (
 ): typeof initialQuestion => {
   if (q) {
     try {
-      return JSON.parse(decode(q));
+      const { sentence, answerType, answers } = JSON.parse(decode(q));
+      return {
+        sentence: sentence.split(""),
+        answerType,
+        answers,
+      };
     } catch {
       return initialQuestion;
     }
