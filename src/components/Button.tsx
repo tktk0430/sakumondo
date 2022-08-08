@@ -33,7 +33,7 @@ const Button = (props: TButtonProps) => {
     if (disabled) return;
     onClick?.(e);
   };
-  console.log(margin);
+
   return (
     <div
       className={innerCN}
