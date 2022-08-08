@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import "App.css";
-import { Main } from "pages/Main";
+import { Main } from "pages/Main/Main";
 import { Header } from "pages/Header";
 import { Footer } from "pages/Footer";
 
