@@ -31,7 +31,11 @@ const Footer = () => {
           <img src={gitIcon} alt="github link" />
         </a>
       </div>
-      <Modal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)}>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        style={{ content: { height: "18rem" } }}
+      >
         <div className="red" style={{ fontSize: "2rem", textAlign: "center" }}>
           遊び方
         </div>
@@ -45,6 +49,11 @@ const Footer = () => {
             開かなかった文字数が得点になります。できるだけ文字を開けずにクイズに正解しましょう!
           </li>
         </ol>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button className="red" onClick={() => setIsModalOpen(false)}>
+            閉じる
+          </Button>
+        </div>
       </Modal>
     </>
   );
