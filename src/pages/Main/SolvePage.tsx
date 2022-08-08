@@ -101,7 +101,11 @@ const SolvePage = () => {
         <div style={{ color: "gray", textAlign: "center" }}>
           挑戦した回数：{submitCount}回
         </div>
-        <Flex justifyContent="center" margin={{ t: 1 }}>
+        <Flex
+          justifyContent="center"
+          margin={{ t: 1 }}
+          style={{ justifyContent: "" }}
+        >
           <Button width="middle" color="red" onClick={onCloseModal}>
             {isCorrect ? "Close" : "Retry"}
           </Button>
@@ -132,9 +136,11 @@ const SolvePage = () => {
       </div>
       <div>
         {isCorrect ? (
-          <Button width="middle" color="red" onClick={swithPanelOpen}>
-            パネル表示切替
-          </Button>
+          <Flex justifyContent="center" margin={{ t: 1 }}>
+            <Button width="middle" color="red" onClick={swithPanelOpen}>
+              パネル表示切替
+            </Button>
+          </Flex>
         ) : (
           <>
             {question.answerType && (
