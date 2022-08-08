@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "./Button";
 import { initialQuestion } from "./const";
 import { decode } from "./crypto";
-import { getResult, setResult } from "./localStoraage";
+import { getResult, setResult } from "./localStorage";
 import { Modal } from "./Modal";
 import { isKatakana, isNumString } from "./validation";
 
