@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "components/Button";
 import { getResult, setResult } from "utils/localStorage";
 import { Modal } from "components/Modal";
@@ -28,6 +28,11 @@ const SolvePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [panelMode, setPanelMode] = useState<"all" | "only">("only");
 
+  const clicked = useMemo(
+    () => question.sentence.map((_, idx) => clickedIndices.includes(idx)),
+    [clickedIndices]
+  );
+
   useEffect(() => {
     if (q) setResult(q, { isCorrect, submitCount, clickedIndices });
   }, [isCorrect, submitCount, clickedIndices]);
@@ -41,7 +46,7 @@ const SolvePage = () => {
     if (isCorrect && panelMode === "all") {
       return true;
     }
-    return clickedIndices.includes(idx);
+    return clicked[idx];
   };
 
   const checkAnswer = () => {
