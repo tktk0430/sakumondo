@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Button } from "./Button";
-import { initialQuestion } from "./const";
-import { decode } from "./crypto";
-import { getResult, setResult } from "./localStorage";
-import { Modal } from "./Modal";
-import { isKatakana, isNumString } from "./validation";
+import { Button } from "components/Button";
+import { getResult, setResult } from "utils/localStorage";
+import { Modal } from "components/Modal";
+import { isKatakana, isNumString } from "utils/validation";
+import { convertQueryToQuestion } from "utils/convertQueryToQuestion";
 
 const ANSWER_TYPE_MAP = {
   katakana: "カタカナ",
@@ -19,34 +18,15 @@ const PANEL_MODE_TRANSITION_MAP = {
 
 const q = new URLSearchParams(window.location.search).get("q");
 const result = getResult(q);
+const question = convertQueryToQuestion(q);
 
 const SolvePage = () => {
-  const [chars, setChars] = useState<string[]>([]);
-  const [answers, setAnswers] = useState<string[]>([]);
-  const [answerType, setAnswerType] =
-    useState<keyof typeof ANSWER_TYPE_MAP>("");
   const [answer, setAnswer] = useState("");
-  const [clickedIndices, setClickedIndices] = useState<number[]>(
-    result.clickedIndices
-  );
+  const [clickedIndices, setClickedIndices] = useState(result.clickedIndices);
   const [submitCount, setSubmitCount] = useState(result.submitCount);
-  const [isCorrect, setIsCorrect] = useState<boolean>(result.isCorrect);
+  const [isCorrect, setIsCorrect] = useState(result.isCorrect);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [panelMode, setPanelMode] =
-    useState<keyof typeof PANEL_MODE_TRANSITION_MAP>("only");
-
-  useEffect(() => {
-    if (q) {
-      const { sentence, answerType, answers } = JSON.parse(decode(q));
-      setChars(sentence.split(""));
-      setAnswerType(answerType);
-      setAnswers(answers.split("\n"));
-    } else {
-      setChars(initialQuestion.sentence);
-      setAnswerType(initialQuestion.answerType);
-      setAnswers(initialQuestion.answers);
-    }
-  }, []);
+  const [panelMode, setPanelMode] = useState<"all" | "only">("only");
 
   useEffect(() => {
     if (q) setResult(q, { isCorrect, submitCount, clickedIndices });
@@ -66,7 +46,7 @@ const SolvePage = () => {
 
   const checkAnswer = () => {
     setSubmitCount((c) => c + 1);
-    if (answers.includes(answer)) {
+    if (question.answers.includes(answer)) {
       setIsCorrect(true);
     } else {
       setIsCorrect(false);
@@ -84,7 +64,7 @@ const SolvePage = () => {
   };
 
   const isValid = () => {
-    switch (answerType) {
+    switch (question.answerType) {
       case "katakana":
         return isKatakana(answer);
       case "number":
@@ -107,9 +87,9 @@ const SolvePage = () => {
         </div>
         <div className="count-container">
           <span className="red" style={{ fontSize: "2rem" }}>
-            {chars.length - clickedIndices.length}
+            {question.sentence.length - clickedIndices.length}
           </span>
-          /{chars.length}
+          /{question.sentence.length}
         </div>
         <hr />
         <div style={{ color: "gray", textAlign: "center" }}>
@@ -121,12 +101,12 @@ const SolvePage = () => {
       </Modal>
       <div className="count-container">
         <span className="red" style={{ fontSize: "2rem" }}>
-          {chars.length - clickedIndices.length}
+          {question.sentence.length - clickedIndices.length}
         </span>
-        /{chars.length}
+        /{question.sentence.length}
       </div>
       <div className="char-box-container">
-        {chars.map((char, idx) => (
+        {question.sentence.map((char, idx) => (
           <div className="char-box" key={idx}>
             {isOpen(idx) ? (
               <div className="char-box-inner open">{char}</div>
@@ -149,8 +129,10 @@ const SolvePage = () => {
           </Button>
         ) : (
           <>
-            {answerType && (
-              <div className="answer-note">{ANSWER_TYPE_MAP[answerType]}で</div>
+            {question.answerType && (
+              <div className="answer-note">
+                {ANSWER_TYPE_MAP[question.answerType]}で
+              </div>
             )}
             <input
               className="answer-input"

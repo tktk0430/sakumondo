@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
-import "./App.css";
-import Body from "./Body";
-import gitIcon from "./images/github.png";
+import "App.css";
+import { Main } from "pages/Main";
+import gitIcon from "images/github.png";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
           <div style={{ fontSize: "1.5rem" }}>SAKUMONDO</div>
         </div>
         <div className="body">
-          <Body />
+          <Main />
         </div>
         <div className="external-links">
           <a

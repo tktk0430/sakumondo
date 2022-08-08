@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button } from "./Button";
-import { encode } from "./crypto";
-import { isKatakana, isNumString } from "./validation";
+import { Button } from "components/Button";
+import { encode } from "utils/crypto";
+import { isKatakana, isNumString } from "utils/validation";
 
 const MAX_SENTENCE_LENGTH = 60;
 const CreatePage = () => {

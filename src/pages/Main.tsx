@@ -1,9 +1,8 @@
 import { useState } from "react";
-import "./App.css";
-import { CreatePage } from "./CreatePage";
-import { SolvePage } from "./SolvePage";
+import { CreatePage } from "pages/CreatePage";
+import { SolvePage } from "pages/SolvePage";
 
-const Body = () => {
+const Main = () => {
   const [isSolving, setIsSolving] = useState(true);
   return (
     <>
@@ -23,4 +22,4 @@ const Body = () => {
   );
 };
 
-export default Body;
+export { Main };
