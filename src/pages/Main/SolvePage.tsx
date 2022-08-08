@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { Button } from "components/Button";
 import { getResult, setResult } from "utils/localStorage";
 import { Modal } from "components/Modal";
@@ -119,24 +119,24 @@ const SolvePage = () => {
       </div>
       <div className="char-box-container">
         {question.sentence.map((char, idx) => (
-          <div className="char-box" key={idx}>
+          <Fragment key={idx}>
             {isOpen(idx) ? (
-              <div className="char-box-inner open">{char}</div>
+              <div className="char-box open">{char}</div>
             ) : (
               <div
                 onClick={() => openChar(idx)}
-                className="char-box-inner closed"
+                className="char-box closed"
                 style={{ cursor: isCorrect ? "default" : "pointer" }}
               >
                 {idx + 1}
               </div>
             )}
-          </div>
+          </Fragment>
         ))}
       </div>
-      <div>
+      <div style={{ marginTop: "1rem" }}>
         {isCorrect ? (
-          <Flex justifyContent="center" margin={{ t: 1 }}>
+          <Flex justifyContent="center">
             <Button width="middle" color="red" onClick={swithPanelOpen}>
               パネル表示切替
             </Button>
