@@ -2,13 +2,21 @@ import { useState } from "react";
 import { CreatePage } from "pages/Main/CreatePage";
 import { SolvePage } from "pages/Main/SolvePage";
 import { Button } from "components/Button";
+import { isValidQuery } from "utils/handleQuery";
+import { Flex } from "components/Flex";
+
+const q = new URLSearchParams(window.location.search).get("q");
 
 const Main = () => {
   const [isSolving, setIsSolving] = useState(true);
   return (
     <>
       <div style={{ display: isSolving ? "block" : "none" }}>
-        <SolvePage />
+        {isValidQuery(q) ? (
+          <SolvePage />
+        ) : (
+          <Flex justifyContent="center">不正なURLです</Flex>
+        )}
       </div>
       <div style={{ display: isSolving ? "none" : "block" }}>
         <CreatePage />

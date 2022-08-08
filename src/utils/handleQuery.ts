@@ -27,3 +27,13 @@ export const convertQueryToQuestion = (
     return initialQuestion;
   }
 };
+
+export const isValidQuery = (q: string | null) => {
+  if (q === null) return true;
+  try {
+    JSON.parse(decode(q));
+    return true;
+  } catch {
+    return false;
+  }
+};

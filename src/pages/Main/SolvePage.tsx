@@ -3,7 +3,7 @@ import { Button } from "components/Button";
 import { getResult, setResult } from "utils/localStorage";
 import { Modal } from "components/Modal";
 import { isKatakana, isNumString } from "utils/validation";
-import { convertQueryToQuestion } from "utils/convertQueryToQuestion";
+import { convertQueryToQuestion } from "utils/handleQuery";
 import { Flex } from "components/Flex";
 
 const ANSWER_TYPE_MAP = {
