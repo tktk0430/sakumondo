@@ -3,6 +3,7 @@ import { Button } from "components/Button";
 import { encode } from "utils/crypto";
 import { isKatakana, isNumString } from "utils/validation";
 import { Flex } from "components/Flex";
+import { LineIcon, LineShareButton } from "./LineShare";
 
 const MAX_SENTENCE_LENGTH = 60;
 const CreatePage = () => {
@@ -90,15 +91,24 @@ const CreatePage = () => {
           {url}
         </a>
       </div>
-      <Flex justifyContent="right">
+      <Flex justifyContent="right" margin={{ t: 0.5 }}>
         {url && (
-          <button
-            className="non-style-button"
-            style={{ color: "gray", textDecoration: "underline" }}
-            onClick={() => navigator.clipboard.writeText(url)}
-          >
-            Copy
-          </button>
+          <>
+            <LineShareButton url={url} title="LINEで送る">
+              <LineIcon size={30} round />
+            </LineShareButton>
+            <button
+              className="non-style-button"
+              style={{
+                color: "gray",
+                textDecoration: "underline",
+                marginLeft: "1rem",
+              }}
+              onClick={() => navigator.clipboard.writeText(url)}
+            >
+              Copy
+            </button>
+          </>
         )}
       </Flex>
     </>
