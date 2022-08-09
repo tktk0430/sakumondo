@@ -155,7 +155,12 @@ const SolvePage = () => {
       <div style={{ marginTop: "1rem" }}>
         {isCorrect ? (
           <Flex justifyContent="center">
-            <Button width="middle" className="red" onClick={swithPanelOpen}>
+            <Button
+              width="middle"
+              className="red"
+              style={{ border: "2px solid hsl(0deg 50% 50%)" }}
+              onClick={swithPanelOpen}
+            >
               {panelMode === "all" ? "自分の結果を見る" : "全て開く"}
             </Button>
           </Flex>
