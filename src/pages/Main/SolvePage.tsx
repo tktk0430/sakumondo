@@ -87,36 +87,54 @@ const SolvePage = () => {
 
   return (
     <>
-      <Modal isOpen={isModalOpen}>
-        <div className="red" style={{ fontSize: "2rem", textAlign: "center" }}>
-          {isCorrect ? "正解！" : "不正解..."}
-        </div>
-        <div className="count-container">
+      <Flex
+        justifyContent="center"
+        margin={{ t: 1, b: 0.5 }}
+        style={{ position: "relative" }}
+      >
+        <div>
           <span className="red" style={{ fontSize: "2rem" }}>
             {question.sentence.length - clickedIndices.length}
           </span>
           /{question.sentence.length}
         </div>
-        <hr />
-        <div style={{ color: "gray", textAlign: "center" }}>
-          挑戦した回数：{submitCount}回
-        </div>
-        <Flex
-          justifyContent="center"
-          margin={{ t: 1 }}
-          style={{ justifyContent: "" }}
-        >
-          <Button width="middle" color="red" onClick={onCloseModal}>
-            {isCorrect ? "Close" : "Retry"}
-          </Button>
-        </Flex>
-      </Modal>
-      <div className="count-container">
-        <span className="red" style={{ fontSize: "2rem" }}>
-          {question.sentence.length - clickedIndices.length}
-        </span>
-        /{question.sentence.length}
-      </div>
+        {isCorrect && (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                right: 0,
+                bottom: 3,
+                textAlign: "right",
+              }}
+            >
+              <div
+                className="bg-green"
+                style={{
+                  textAlign: "center",
+                  fontSize: "0.1rem",
+                  width: "5rem",
+                  borderRadius: "0.2rem",
+                  height: "1.2rem",
+                  lineHeight: "1.2rem",
+                  fontWeight: "bolder",
+                }}
+              >
+                CLEAR
+              </div>
+              <div>
+                {submitCount === 1 ? (
+                  <div style={{ color: "#918d40", fontWeight: "bold" }}>
+                    No Miss !
+                  </div>
+                ) : (
+                  <div>{submitCount - 1} Miss</div>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+      </Flex>
       <div className="char-box-container">
         {question.sentence.map((char, idx) => (
           <Fragment key={idx}>
@@ -168,6 +186,30 @@ const SolvePage = () => {
           </>
         )}
       </div>
+      <Modal isOpen={isModalOpen}>
+        <div className="red" style={{ fontSize: "2rem", textAlign: "center" }}>
+          {isCorrect ? "正解！" : "不正解..."}
+        </div>
+        <div className="count-container">
+          <span className="red" style={{ fontSize: "2rem" }}>
+            {question.sentence.length - clickedIndices.length}
+          </span>
+          /{question.sentence.length}
+        </div>
+        <hr />
+        <div style={{ color: "gray", textAlign: "center" }}>
+          挑戦した回数：{submitCount}回
+        </div>
+        <Flex
+          justifyContent="center"
+          margin={{ t: 1 }}
+          style={{ justifyContent: "" }}
+        >
+          <Button width="middle" color="red" onClick={onCloseModal}>
+            {isCorrect ? "Close" : "Retry"}
+          </Button>
+        </Flex>
+      </Modal>
     </>
   );
 };

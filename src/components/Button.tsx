@@ -27,7 +27,7 @@ const Button = (props: TButtonProps) => {
     className,
     { "button-disabled": disabled },
     { [`button-width-${width}`]: !!width },
-    { [`button-color-${color}`]: !!color }
+    { [`bg-${color}`]: !!color }
   );
   const innerOnClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (disabled) return;

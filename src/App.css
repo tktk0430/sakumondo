@@ -113,12 +113,12 @@
   cursor: not-allowed !important;
 }
 
-.button-color-red {
+.bg-red {
   background-color: hsl(0deg 50% 50%);
   color: white;
 }
 
-.button-color-green {
+.bg-green {
   background-color: #918d40;
   color: white;
 }
