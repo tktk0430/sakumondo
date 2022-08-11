@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { CreatePage } from "pages/Main/CreatePage";
-import { SolvePage } from "pages/Main/SolvePage";
+import { CreatePage } from "pages/Home/CreatePage";
+import { SolvePage } from "pages/Home/SolvePage";
 import { Button } from "components/Button";
 import { isValidQuery } from "utils/handleQuery";
 import { Flex } from "components/Flex";
 
 const q = new URLSearchParams(window.location.search).get("q");
 
-const Main = () => {
+const Home = () => {
   const [isSolving, setIsSolving] = useState(true);
   return (
     <>
@@ -33,4 +33,4 @@ const Main = () => {
   );
 };
 
-export { Main };
+export { Home };
