@@ -5,6 +5,8 @@ import { Modal } from "components/Modal";
 import { isKatakana, isNumString } from "utils/validation";
 import { convertQueryToQuestion } from "utils/handleQuery";
 import { Flex } from "components/Flex";
+import { useAtom } from "jotai";
+import { enableSoundAtom } from "atoms/Atoms";
 
 const ANSWER_TYPE_MAP = {
   katakana: "カタカナ",
@@ -27,6 +29,7 @@ const SolvePage = () => {
   const [isCorrect, setIsCorrect] = useState(result.isCorrect);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [panelMode, setPanelMode] = useState<"all" | "only">("only");
+  const enableSound = useAtom(enableSoundAtom)[0];
 
   const clicked = useMemo(
     () => question.sentence.map((_, idx) => clickedIndices.includes(idx)),
@@ -53,10 +56,10 @@ const SolvePage = () => {
     setSubmitCount((c) => c + 1);
     if (question.answers.includes(answer)) {
       setIsCorrect(true);
-      new Audio(require("./sound/success.wav")).play();
+      if (enableSound) new Audio(require("./sound/success.wav")).play();
     } else {
       setIsCorrect(false);
-      new Audio(require("./sound/miss.wav")).play();
+      if (enableSound) new Audio(require("./sound/miss.wav")).play();
     }
     setIsModalOpen(true);
   };
