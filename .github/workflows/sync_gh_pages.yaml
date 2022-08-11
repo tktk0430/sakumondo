@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v3
       - name: build
         run: npm i && npm run gh_pages_build
-      - name: add CNAME
-        run: mv CNAME docs/CNAME && mv 404.html docs/404.html
+      - name: add docs extra
+        run: mv docs_extra/* docs/ && rm -rf docs_extra/
       - name: push
         run: npm run git
