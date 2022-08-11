@@ -16,8 +16,6 @@ const PANEL_MODE_TRANSITION_MAP = {
   all: "only" as const,
   only: "all" as const,
 };
-const successSE = new Audio(require("./sound/success.wav"));
-const missSE = new Audio(require("./sound/miss.wav"));
 
 const SolvePage = () => {
   const q = new URLSearchParams(window.location.search).get("q");
@@ -55,10 +53,10 @@ const SolvePage = () => {
     setSubmitCount((c) => c + 1);
     if (question.answers.includes(answer)) {
       setIsCorrect(true);
-      successSE.play();
+      new Audio(require("./sound/success.wav")).play();
     } else {
       setIsCorrect(false);
-      missSE.play();
+      new Audio(require("./sound/miss.wav")).play();
     }
     setIsModalOpen(true);
   };
