@@ -160,18 +160,23 @@ const SolvePage = () => {
           </Fragment>
         ))}
       </div>
-      <div style={{ marginTop: "1rem" }}>
+      <div style={{ marginTop: "0.5rem" }}>
         {isCorrect ? (
-          <Flex justifyContent="center">
-            <Button
-              width="middle"
-              className="red"
-              style={{ border: "2px solid hsl(0deg 50% 50%)" }}
-              onClick={swithPanelOpen}
-            >
-              {panelMode === "all" ? "自分の結果を見る" : "全て開く"}
-            </Button>
-          </Flex>
+          <div style={{ textAlign: "center" }}>
+            <div style={{ fontSize: "1.5rem" }} className="red">
+              A. {answer}
+            </div>
+            <Flex justifyContent="center" margin={{ t: 0.5 }}>
+              <Button
+                width="middle"
+                className="red"
+                style={{ border: "2px solid hsl(0deg 50% 50%)" }}
+                onClick={swithPanelOpen}
+              >
+                {panelMode === "all" ? "自分の結果を見る" : "全て開く"}
+              </Button>
+            </Flex>
+          </div>
         ) : (
           <>
             {question.answerType && (

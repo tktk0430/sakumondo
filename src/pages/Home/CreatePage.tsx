@@ -8,7 +8,7 @@ import { shortenURL } from "api/gas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
-const MAX_SENTENCE_LENGTH = 60;
+const MAX_SENTENCE_LENGTH = 48;
 const CreatePage = () => {
   const [sentence, setSentence] = useState("");
   const [answerType, setAnswerType] = useState("katakana");
