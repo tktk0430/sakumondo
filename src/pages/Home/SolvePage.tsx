@@ -18,6 +18,8 @@ const PANEL_MODE_TRANSITION_MAP = {
   all: "only" as const,
   only: "all" as const,
 };
+new Audio(require("./sound/success.wav"));
+new Audio(require("./sound/miss.wav"));
 
 const SolvePage = () => {
   const q = new URLSearchParams(window.location.search).get("q");
