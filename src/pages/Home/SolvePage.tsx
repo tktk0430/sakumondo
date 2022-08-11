@@ -16,6 +16,8 @@ const PANEL_MODE_TRANSITION_MAP = {
   all: "only" as const,
   only: "all" as const,
 };
+const successSE = new Audio(require("./sound/success.wav"));
+const missSE = new Audio(require("./sound/miss.wav"));
 
 const SolvePage = () => {
   const q = new URLSearchParams(window.location.search).get("q");
@@ -53,8 +55,10 @@ const SolvePage = () => {
     setSubmitCount((c) => c + 1);
     if (question.answers.includes(answer)) {
       setIsCorrect(true);
+      successSE.play();
     } else {
       setIsCorrect(false);
+      missSE.play();
     }
     setIsModalOpen(true);
   };
@@ -111,7 +115,7 @@ const SolvePage = () => {
                 className="bg-green"
                 style={{
                   textAlign: "center",
-                  fontSize: "0.1rem",
+                  fontSize: "0.8rem",
                   width: "5rem",
                   borderRadius: "0.2rem",
                   height: "1.2rem",
