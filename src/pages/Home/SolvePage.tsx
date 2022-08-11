@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useMemo, useState } from "react";
 import { Button } from "components/Button";
-import { getResult, setResult } from "utils/localStorage";
+import { getResult, setResultFor } from "utils/localStorage";
 import { Modal } from "components/Modal";
 import { isKatakana, isNumString } from "utils/validation";
 import { convertQueryToQuestion } from "utils/handleQuery";
@@ -27,7 +27,7 @@ const SolvePage = () => {
   const q = new URLSearchParams(window.location.search).get("q");
   const result = getResult(q);
   const question = convertQueryToQuestion(q);
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState(result.yourAnswer);
   const [clickedIndices, setClickedIndices] = useState(result.clickedIndices);
   const [submitCount, setSubmitCount] = useState(result.submitCount);
   const [isCorrect, setIsCorrect] = useState(result.isCorrect);
@@ -40,13 +40,10 @@ const SolvePage = () => {
     [clickedIndices, question.sentence]
   );
 
-  useEffect(() => {
-    if (q) setResult(q, { isCorrect, submitCount, clickedIndices });
-  }, [q, isCorrect, submitCount, clickedIndices]);
-
   const openChar = (idx: number) => {
     if (isCorrect) return;
     setClickedIndices((old) => [...old, idx]);
+    setResultFor(q, "clickedIndices", clickedIndices);
   };
 
   const isOpen = (idx: number) => {
@@ -58,9 +55,12 @@ const SolvePage = () => {
 
   const checkAnswer = () => {
     setSubmitCount((c) => c + 1);
+    setResultFor(q, "submitCount", submitCount + 1);
     if (question.answers.includes(answer)) {
       setIsCorrect(true);
       if (enableSound) new Audio(require("./sound/success.wav")).play();
+      setResultFor(q, "yourAnswer", answer);
+      setResultFor(q, "isCorrect", true);
     } else {
       setIsCorrect(false);
       if (enableSound) new Audio(require("./sound/miss.wav")).play();
