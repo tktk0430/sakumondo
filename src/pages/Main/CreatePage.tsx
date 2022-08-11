@@ -21,10 +21,7 @@ const CreatePage = () => {
       body: JSON.stringify({ q: encodePath }),
     });
     const result = await resp.text();
-    // const originpathresp = await fetch(`${getOriginURL}?key=${result}`);
-    // const originPath = await originpathresp.text();
-    // console.log({ encodePath, originPath });
-    return `${window.location.href.split("?")[0]}shorten/${result}`;
+    return `${window.location.href.split("?")[0]}short/${result}`;
   };
 
   const isValid = () => {

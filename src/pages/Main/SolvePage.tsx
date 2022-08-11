@@ -17,11 +17,10 @@ const PANEL_MODE_TRANSITION_MAP = {
   only: "all" as const,
 };
 
-const q = new URLSearchParams(window.location.search).get("q");
-const result = getResult(q);
-const question = convertQueryToQuestion(q);
-
 const SolvePage = () => {
+  const q = new URLSearchParams(window.location.search).get("q");
+  const result = getResult(q);
+  const question = convertQueryToQuestion(q);
   const [answer, setAnswer] = useState("");
   const [clickedIndices, setClickedIndices] = useState(result.clickedIndices);
   const [submitCount, setSubmitCount] = useState(result.submitCount);
@@ -31,12 +30,12 @@ const SolvePage = () => {
 
   const clicked = useMemo(
     () => question.sentence.map((_, idx) => clickedIndices.includes(idx)),
-    [clickedIndices]
+    [clickedIndices, question.sentence]
   );
 
   useEffect(() => {
     if (q) setResult(q, { isCorrect, submitCount, clickedIndices });
-  }, [isCorrect, submitCount, clickedIndices]);
+  }, [q, isCorrect, submitCount, clickedIndices]);
 
   const openChar = (idx: number) => {
     if (isCorrect) return;
