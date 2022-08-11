@@ -12,16 +12,22 @@ const CreatePage = () => {
   const [answerType, setAnswerType] = useState("katakana");
   const [answers, setAnswers] = useState("");
   const [url, setURL] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const createURL = async () => {
-    const data = { sentence, answerType, answers };
-    const encodePath = encode(data);
-    const resp = await fetch(shortenURL, {
-      method: "POST",
-      body: JSON.stringify({ q: encodePath }),
-    });
-    const result = await resp.text();
-    return `${window.location.href.split("?")[0]}short/${result}`;
+    setLoading(true);
+    try {
+      const data = { sentence, answerType, answers };
+      const encodePath = encode(data);
+      const resp = await fetch(shortenURL, {
+        method: "POST",
+        body: JSON.stringify({ q: encodePath }),
+      });
+      const result = await resp.text();
+      return `${window.location.href.split("?")[0]}short/${result}`;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const isValid = () => {
@@ -80,9 +86,9 @@ const CreatePage = () => {
           color="red"
           width="middle"
           onClick={async () => setURL(await createURL())}
-          disabled={!isValid()}
+          disabled={!isValid() || loading}
         >
-          作成
+          {loading ? "作成中です..." : "作成"}
         </Button>
       </Flex>
       <div
