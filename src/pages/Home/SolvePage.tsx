@@ -7,6 +7,8 @@ import { convertQueryToQuestion } from "utils/handleQuery";
 import { Flex } from "components/Flex";
 import { useAtom } from "jotai";
 import { enableSoundAtom } from "atoms/Atoms";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 const ANSWER_TYPE_MAP = {
   katakana: "カタカナ",
@@ -174,6 +176,7 @@ const SolvePage = () => {
           <>
             {question.answerType && (
               <div className="answer-note">
+                <FontAwesomeIcon icon={faTriangleExclamation} />{" "}
                 {ANSWER_TYPE_MAP[question.answerType]}で
               </div>
             )}

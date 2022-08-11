@@ -5,6 +5,8 @@ import { isKatakana, isNumString } from "utils/validation";
 import { Flex } from "components/Flex";
 import { LineIcon, LineShareButton } from "./LineShare";
 import { shortenURL } from "api/gas";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 const MAX_SENTENCE_LENGTH = 60;
 const CreatePage = () => {
@@ -52,7 +54,21 @@ const CreatePage = () => {
   return (
     <>
       <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="sentence">問題文 ({MAX_SENTENCE_LENGTH}字まで)</label>
+        <Flex>
+          <label htmlFor="sentence">問題文 ({MAX_SENTENCE_LENGTH}字まで)</label>
+          {sentence.length > MAX_SENTENCE_LENGTH && (
+            <div
+              style={{
+                justifyContent: "center",
+                marginLeft: "0.5rem",
+              }}
+              className="red"
+            >
+              <FontAwesomeIcon icon={faTriangleExclamation} />
+              文字数が長すぎます！
+            </div>
+          )}
+        </Flex>
         <textarea
           id="sentence"
           className="create-input"
