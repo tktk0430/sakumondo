@@ -26,7 +26,7 @@ const CreatePage = () => {
         body: JSON.stringify({ q: encodePath }),
       });
       const result = await resp.text();
-      return `${window.location.href.split("?")[0]}short/${result}`;
+      return `${window.location.href.split("?")[0]}short?key=${result}`;
     } finally {
       setLoading(false);
     }
