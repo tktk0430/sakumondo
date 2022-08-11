@@ -3,8 +3,6 @@ import { Flex } from "components/Flex";
 import { Modal } from "components/Modal";
 import gitIcon from "images/github.png";
 import { useState } from "react";
-const URL =
-  "https://script.google.com/macros/s/AKfycbzy1eUFf_-uamlPzDyut9LQX2eipz3GEJy1_2BTpQ4Jla7BiWl5VzdER55fl9vF-ozn/exec";
 
 const isVisted = () => {
   const v = localStorage.getItem("isVisited");
@@ -34,15 +32,6 @@ const Footer = () => {
           <img src={gitIcon} alt="github link" />
         </a>
       </div>
-      <Button
-        style={{ color: "white" }}
-        onClick={async () => {
-          const resp = await fetch(URL);
-          resp.text();
-        }}
-      >
-        test
-      </Button>
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}

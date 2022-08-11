@@ -4,6 +4,7 @@ import { encode } from "utils/crypto";
 import { isKatakana, isNumString } from "utils/validation";
 import { Flex } from "components/Flex";
 import { LineIcon, LineShareButton } from "./LineShare";
+import { shortenURL } from "api/gas";
 
 const MAX_SENTENCE_LENGTH = 60;
 const CreatePage = () => {
@@ -12,10 +13,18 @@ const CreatePage = () => {
   const [answers, setAnswers] = useState("");
   const [url, setURL] = useState("");
 
-  const createURL = () => {
+  const createURL = async () => {
     const data = { sentence, answerType, answers };
     const encodePath = encode(data);
-    return `${window.location.href.split("?")[0]}?q=${encodePath}`;
+    const resp = await fetch(shortenURL, {
+      method: "POST",
+      body: JSON.stringify({ q: encodePath }),
+    });
+    const result = await resp.text();
+    // const originpathresp = await fetch(`${getOriginURL}?key=${result}`);
+    // const originPath = await originpathresp.text();
+    // console.log({ encodePath, originPath });
+    return `${window.location.href.split("?")[0]}shorten/${result}`;
   };
 
   const isValid = () => {
@@ -73,7 +82,7 @@ const CreatePage = () => {
         <Button
           color="red"
           width="middle"
-          onClick={() => setURL(createURL())}
+          onClick={async () => setURL(await createURL())}
           disabled={!isValid()}
         >
           作成
