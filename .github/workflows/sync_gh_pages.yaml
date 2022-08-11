@@ -23,6 +23,6 @@ jobs:
       - name: build
         run: npm i && npm run gh_pages_build
       - name: add CNAME
-        run: mv CNAME docs/CNAME
+        run: mv CNAME docs/CNAME && mv 404.html docs/404.html
       - name: push
         run: npm run git
