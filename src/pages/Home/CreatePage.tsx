@@ -6,7 +6,11 @@ import { Flex } from "components/Flex";
 import { LineIcon, LineShareButton } from "./LineShare";
 import { shortenURL } from "api/gas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCopy,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
+import { Modal } from "components/Modal";
 
 const MAX_SENTENCE_LENGTH = 48;
 const CreatePage = () => {
@@ -15,6 +19,7 @@ const CreatePage = () => {
   const [answers, setAnswers] = useState("");
   const [url, setURL] = useState("");
   const [loading, setLoading] = useState(false);
+  const [openURLModal, setOpenURLModal] = useState(false);
 
   const createURL = async () => {
     setLoading(true);
@@ -26,6 +31,7 @@ const CreatePage = () => {
         body: JSON.stringify({ q: encodePath }),
       });
       const result = await resp.text();
+      setOpenURLModal(true);
       return `${window.location.href.split("?")[0]}short?key=${result}`;
     } finally {
       setLoading(false);
@@ -49,6 +55,13 @@ const CreatePage = () => {
       default:
         return false;
     }
+  };
+
+  const reset = () => {
+    setSentence("");
+    setAnswerType("katakana");
+    setAnswers("");
+    setURL("");
   };
 
   return (
@@ -97,48 +110,66 @@ const CreatePage = () => {
           onChange={(e) => setAnswers(e.target.value)}
         />
       </div>
-      <Flex justifyContent="center">
+      <Flex justifyContent="space-between">
+        {url ? (
+          <Button
+            color="red"
+            width="middle"
+            onClick={async () => setOpenURLModal(true)}
+          >
+            共有する
+          </Button>
+        ) : (
+          <Button
+            color="red"
+            width="middle"
+            onClick={async () => setURL(await createURL())}
+            disabled={!isValid() || loading}
+          >
+            {loading ? "作成中です..." : "作成"}
+          </Button>
+        )}
         <Button
-          color="red"
           width="middle"
-          onClick={async () => setURL(await createURL())}
-          disabled={!isValid() || loading}
+          className="red"
+          style={{ border: "2px solid hsl(0deg 50% 50%)" }}
+          onClick={reset}
         >
-          {loading ? "作成中です..." : "作成"}
+          リセット
         </Button>
       </Flex>
-      <div
-        style={{
-          marginTop: "1rem",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-        }}
-      >
-        <a href={url} target="_blank" rel="noopener noreferrer">
-          {url}
-        </a>
-      </div>
-      <Flex justifyContent="right" margin={{ t: 0.5 }}>
-        {url && (
-          <>
+
+      <Modal isOpen={openURLModal} style={{ content: { height: "14rem" } }}>
+        <div style={{ height: "100%" }}>
+          <div
+            className="red"
+            style={{ fontSize: "2rem", textAlign: "center" }}
+          >
+            問題URL
+          </div>
+          <div style={{ textAlign: "center" }}>{url}</div>
+          <hr />
+          <Flex justifyContent="space-evenly" style={{ margin: "0 auto" }}>
             <LineShareButton url={url} title="LINEで送る">
-              <LineIcon size={30} round />
+              <LineIcon size="3rem" round />
             </LineShareButton>
             <button
-              className="non-style-button"
-              style={{
-                color: "gray",
-                textDecoration: "underline",
-                marginLeft: "1rem",
-              }}
+              className="button-reset"
               onClick={() => navigator.clipboard.writeText(url)}
             >
-              Copy
+              <FontAwesomeIcon icon={faCopy} size="3x" />
             </button>
-          </>
-        )}
-      </Flex>
+          </Flex>
+          <Button
+            color="red"
+            width="middle"
+            onClick={() => setOpenURLModal(false)}
+            style={{ margin: "5px auto" }}
+          >
+            閉じる
+          </Button>
+        </div>
+      </Modal>
     </>
   );
 };

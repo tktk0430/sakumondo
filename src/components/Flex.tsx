@@ -3,7 +3,11 @@ import { marginStyle, TMargin } from "./margin";
 type TFlexProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
-> & { justifyContent?: "center" | "right" } & { margin?: TMargin };
+> & {
+  justifyContent?: "center" | "right" | "space-evenly" | "space-between";
+} & {
+  margin?: TMargin;
+};
 
 const Flex = (props: TFlexProps) => {
   const { children, justifyContent, style, margin, ...restProps } = props;
