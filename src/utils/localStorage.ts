@@ -33,8 +33,6 @@ export const setResultFor = <T extends keyof typeof INITIAL_RESULT>(
   const allResult = getAllResult();
   const result = getResult(key);
   const newValue = { ...result, [type]: value };
-  console.log(newValue);
   const newResult = { ...allResult, [key]: newValue };
-  console.log(newResult);
   localStorage.setItem("result", JSON.stringify(newResult));
 };
