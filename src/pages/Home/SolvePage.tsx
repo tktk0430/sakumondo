@@ -1,7 +1,6 @@
 import React, { Fragment, useMemo, useState } from "react";
 import { Button } from "components/Button";
 import { getResult, setResultFor } from "utils/localStorage";
-import { Modal } from "components/Modal";
 import { isKatakana, isNumString } from "utils/validation";
 import { convertQueryToQuestion } from "utils/handleQuery";
 import { Flex } from "components/Flex";
@@ -9,6 +8,7 @@ import { useAtom } from "jotai";
 import { enableSoundAtom } from "atoms/Atoms";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 const ANSWER_TYPE_MAP = {
   katakana: "カタカナ",
@@ -31,8 +31,7 @@ const SolvePage = () => {
   const [clickedIndices, setClickedIndices] = useState(result.clickedIndices);
   const [submitCount, setSubmitCount] = useState(result.submitCount);
   const [isCorrect, setIsCorrect] = useState(result.isCorrect);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [panelMode, setPanelMode] = useState<"all" | "only">("only");
+  const [panelMode, setPanelMode] = useState<"all" | "only">("all");
   const enableSound = useAtom(enableSoundAtom)[0];
 
   const clicked = useMemo(
@@ -55,18 +54,20 @@ const SolvePage = () => {
   };
 
   const checkAnswer = () => {
-    setSubmitCount((c) => c + 1);
+    const newCount = submitCount + 1;
+    setSubmitCount(newCount);
     setResultFor(q, "submitCount", submitCount + 1);
     if (question.answers.includes(answer)) {
+      toast.success("🎉！正解！🎉");
       setIsCorrect(true);
       if (enableSound) new Audio(require("./sound/success.wav")).play();
       setResultFor(q, "yourAnswer", answer);
       setResultFor(q, "isCorrect", true);
     } else {
+      toast.error(`不正解...(${newCount} Miss)`);
       setIsCorrect(false);
       if (enableSound) new Audio(require("./sound/miss.wav")).play();
     }
-    setIsModalOpen(true);
   };
 
   const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -87,11 +88,6 @@ const SolvePage = () => {
       default:
         return false;
     }
-  };
-
-  const onCloseModal = () => {
-    setIsModalOpen(false);
-    if (isCorrect) setPanelMode("all");
   };
 
   return (
@@ -206,30 +202,6 @@ const SolvePage = () => {
           </>
         )}
       </div>
-      <Modal isOpen={isModalOpen}>
-        <div className="red" style={{ fontSize: "2rem", textAlign: "center" }}>
-          {isCorrect ? "正解！" : "不正解..."}
-        </div>
-        <div className="count-container">
-          <span className="red" style={{ fontSize: "2rem" }}>
-            {question.sentence.length - clickedIndices.length}
-          </span>
-          /{question.sentence.length}
-        </div>
-        <hr />
-        <div style={{ color: "gray", textAlign: "center" }}>
-          挑戦した回数：{submitCount}回
-        </div>
-        <Flex
-          justifyContent="center"
-          margin={{ t: 1 }}
-          style={{ justifyContent: "" }}
-        >
-          <Button width="middle" color="red" onClick={onCloseModal}>
-            {isCorrect ? "Close" : "Retry"}
-          </Button>
-        </Flex>
-      </Modal>
     </>
   );
 };

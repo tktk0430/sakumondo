@@ -11,6 +11,7 @@ import {
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "components/Modal";
+import { toast } from "react-toastify";
 
 const MAX_SENTENCE_LENGTH = 48;
 const CreatePage = () => {
@@ -55,6 +56,11 @@ const CreatePage = () => {
       default:
         return false;
     }
+  };
+
+  const onCopy = () => {
+    navigator.clipboard.writeText(url);
+    toast.info("URLをコピーしました");
   };
 
   const reset = () => {
@@ -153,10 +159,7 @@ const CreatePage = () => {
             <LineShareButton url={url} title="LINEで送る">
               <LineIcon size="3rem" round />
             </LineShareButton>
-            <button
-              className="button-reset"
-              onClick={() => navigator.clipboard.writeText(url)}
-            >
+            <button className="button-reset" onClick={onCopy}>
               <FontAwesomeIcon icon={faCopy} size="3x" />
             </button>
           </Flex>
