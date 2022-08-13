@@ -3,7 +3,7 @@ import { Button } from "components/Button";
 import { getResult, setResultFor } from "utils/localStorage";
 import { Modal } from "components/Modal";
 import { isKatakana, isNumString } from "utils/validation";
-import { convertQueryToQuestion, getQ } from "utils/handleQuery";
+import { convertQueryToQuestion } from "utils/handleQuery";
 import { Flex } from "components/Flex";
 import { useAtom } from "jotai";
 import { enableSoundAtom } from "atoms/Atoms";
@@ -24,7 +24,7 @@ new Audio(require("./sound/success.wav"));
 new Audio(require("./sound/miss.wav"));
 
 const SolvePage = () => {
-  const q = getQ(window.location.search);
+  const q = new URLSearchParams(window.location.search).get("q");
   const result = getResult(q);
   const question = convertQueryToQuestion(q);
   const [answer, setAnswer] = useState(result.yourAnswer);
@@ -42,8 +42,9 @@ const SolvePage = () => {
 
   const openChar = (idx: number) => {
     if (isCorrect) return;
-    setClickedIndices((old) => [...old, idx]);
-    setResultFor(q, "clickedIndices", clickedIndices);
+    const newIndices = [...clickedIndices, idx];
+    setClickedIndices(newIndices);
+    setResultFor(q, "clickedIndices", newIndices);
   };
 
   const isOpen = (idx: number) => {

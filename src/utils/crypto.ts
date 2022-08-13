@@ -7,7 +7,7 @@ export const encode = (data: any): string => {
     JSON.stringify(data),
     SECRET_KEY
   ).toString();
-  return path;
+  return encodeURIComponent(path);
 };
 
 export const decode = (encodePath: string): string => {

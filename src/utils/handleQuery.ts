@@ -28,12 +28,6 @@ export const convertQueryToQuestion = (
   }
 };
 
-export const getQ = (url: string) => {
-  const q = new URLSearchParams(url).get("q");
-  if (q === null) return null;
-  return q.replaceAll(" ", "+");
-};
-
 export const isValidQuery = (q: string | null) => {
   if (q === null) return true;
   try {
