@@ -84,7 +84,7 @@ const CreatePage = () => {
               className="red"
             >
               <FontAwesomeIcon icon={faTriangleExclamation} />
-              文字数が長すぎます！
+              文字数が長すぎます！({sentence.length}/{MAX_SENTENCE_LENGTH})
             </div>
           )}
         </Flex>
@@ -93,6 +93,7 @@ const CreatePage = () => {
           className="create-input"
           value={sentence}
           onChange={(e) => setSentence(e.target.value)}
+          placeholder="例: ボールを転がして10本のピンを倒す遊戯の名前は？"
         />
       </div>
       <div style={{ marginBottom: "1rem" }}>
@@ -114,6 +115,9 @@ const CreatePage = () => {
           className="create-input"
           value={answers}
           onChange={(e) => setAnswers(e.target.value)}
+          placeholder="例:
+ボウリング
+ボーリング"
         />
       </div>
       <Flex justifyContent="space-between">
