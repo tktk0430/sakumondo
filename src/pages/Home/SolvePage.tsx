@@ -3,7 +3,7 @@ import { Button } from "components/Button";
 import { getResult, setResultFor } from "utils/localStorage";
 import { Modal } from "components/Modal";
 import { isKatakana, isNumString } from "utils/validation";
-import { convertQueryToQuestion } from "utils/handleQuery";
+import { convertQueryToQuestion, getQ } from "utils/handleQuery";
 import { Flex } from "components/Flex";
 import { useAtom } from "jotai";
 import { enableSoundAtom } from "atoms/Atoms";
@@ -24,7 +24,7 @@ new Audio(require("./sound/success.wav"));
 new Audio(require("./sound/miss.wav"));
 
 const SolvePage = () => {
-  const q = new URLSearchParams(window.location.search).get("q");
+  const q = getQ(window.location.search);
   const result = getResult(q);
   const question = convertQueryToQuestion(q);
   const [answer, setAnswer] = useState(result.yourAnswer);
