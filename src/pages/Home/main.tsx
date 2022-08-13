@@ -1,32 +1,43 @@
-import { useState } from "react";
 import { CreatePage } from "pages/Home/CreatePage";
 import { SolvePage } from "pages/Home/SolvePage";
 import { Button } from "components/Button";
 import { isValidQuery } from "utils/handleQuery";
 import { Flex } from "components/Flex";
+import { useSearchParams } from "react-router-dom";
 
-const q = new URLSearchParams(window.location.search).get("q");
+const MODE_MAPPER = {
+  solve: "create",
+  create: "solve",
+};
+
 const Home = () => {
-  const [isSolving, setIsSolving] = useState(true);
+  const [params, setParams] = useSearchParams();
+  const q = params.get("q");
+  const mode = (params.get("mode") || "solve") as keyof typeof MODE_MAPPER;
+
   return (
     <>
-      <div style={{ display: isSolving ? "block" : "none" }}>
+      <div style={{ display: mode === "solve" ? "block" : "none" }}>
         {isValidQuery(q) ? (
           <SolvePage />
         ) : (
           <Flex justifyContent="center">不正なURLです</Flex>
         )}
       </div>
-      <div style={{ display: isSolving ? "none" : "block" }}>
+      <div style={{ display: mode === "create" ? "block" : "none" }}>
         <CreatePage />
       </div>
       <Button
         color="green"
         width="full"
-        onClick={() => setIsSolving(!isSolving)}
+        onClick={() =>
+          setParams(
+            q ? { q, mode: MODE_MAPPER[mode] } : { mode: MODE_MAPPER[mode] }
+          )
+        }
         margin={{ t: 2 }}
       >
-        {isSolving ? "問題を作る" : "回答に戻る"}
+        {mode === "solve" ? "問題を作る" : "回答に戻る"}
       </Button>
     </>
   );
