@@ -3,14 +3,18 @@ import { encode } from "../src/utils/crypto";
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 
-var isSucceeded = false;
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const INSTRUCTION_TO_ANSWER_TYPE = {
-  カタカナで: "katakana",
-  数字で: "number",
+const instructionToAnswerType = (instruction) => {
+  if (instruction.includes("カタカナ")) {
+    return "katakana";
+  }
+  if (instruction.includes("数字")) {
+    return "number";
+  }
+  throw Error("未知の解答形式です");
 };
+
 const hoge = async (date) => {
-  console.log(date, "date");
+  var isSucceeded = false;
   let result = null;
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -48,17 +52,17 @@ const fuga = async (date) => {
   const question = result
     ? {
         sentence: result.question.join(""),
-        answerType: INSTRUCTION_TO_ANSWER_TYPE[result.instruction],
+        answerType: instructionToAnswerType(result.instruction),
         answers: result.answers.join("\n"),
       }
     : null;
 
   if (question) {
-    console.log(date, result);
     const encoded = encode(question);
     return { [date]: encoded };
+  } else {
+    return {};
   }
-  return {};
 };
 
 const piyo = async (start, end) => {
@@ -67,15 +71,16 @@ const piyo = async (start, end) => {
 
   const startDate = dayjs(start);
   const endDate = dayjs(end);
-
   for (let date = startDate; date <= endDate; date = date.add(1, "day")) {
     const target = date.format("YYYY-MM-DD");
-    if (target in existingDays) continue;
+    if (existingDays.includes(target)) continue;
+    console.log(target);
     const result = await fuga(target);
-    await sleep(5000);
+    Object.assign(kakomon, result);
   }
+  fs.writeFileSync("scraper/kakomon.json", JSON.stringify(kakomon), () => {});
 };
-piyo("2022-05-19", "2022-05-21");
+piyo("2022-08-14", "2022-08-15");
 
 //   page.on("response", async (response) => {
 //     const url = response.url();
