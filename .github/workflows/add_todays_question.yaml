@@ -1,7 +1,7 @@
 name: add_todays_question
 
 on:
-  # Runs on pushes targeting the default branch
+  workflow_dispatch:
   schedule:
     - cron: "0 23 * * *"
 
