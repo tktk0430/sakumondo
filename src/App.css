@@ -15,8 +15,9 @@
 }
 
 .external-links {
-  display: flex;
-  justify-content: space-evenly;
+  display: grid;
+  justify-content: center;
+  gap: 10px;
   margin-top: 2rem;
 }
 

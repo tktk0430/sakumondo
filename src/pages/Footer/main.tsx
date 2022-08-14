@@ -2,6 +2,7 @@ import { Button } from "components/Button";
 import { Flex } from "components/Flex";
 import { Modal } from "components/Modal";
 import gitIcon from "images/github.png";
+import twitterIcon from "images/twitter.png";
 import { useState } from "react";
 
 const isVisted = () => {
@@ -25,12 +26,28 @@ const Footer = () => {
       </Flex>
       <div className="external-links">
         <a
-          href="https://github.com/tktk0430/sakumondo"
+          href="https://forms.gle/Ev3L6eagYnhdsLPb7"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src={gitIcon} alt="github link" />
+          <span>バグ報告・機能追加要望など</span>
         </a>
+        <Flex justifyContent="space-evenly">
+          <a
+            href="https://github.com/tktk0430/sakumondo"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={gitIcon} alt="github link" height="32px" />
+          </a>
+          <a
+            href="https://twitter.com/nnnTAKUuuu"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src={twitterIcon} alt="twitter link" height="32px" />
+          </a>
+        </Flex>
       </div>
       <Modal
         isOpen={isModalOpen}
