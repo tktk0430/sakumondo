@@ -1,4 +1,4 @@
-name: sync gh-pages branch with main
+name: add_todays_question
 
 on:
   # Runs on pushes targeting the default branch
