@@ -161,7 +161,7 @@ const SolvePage = () => {
         {isCorrect ? (
           <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: "1.5rem" }} className="red">
-              A. {answer}
+              A. {question.answers.join("、")}
             </div>
             <Flex justifyContent="center" margin={{ t: 0.5 }}>
               <Button
