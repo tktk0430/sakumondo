@@ -1,0 +1,21 @@
+name: sync gh-pages branch with main
+
+on:
+  # Runs on pushes targeting the default branch
+  schedule:
+    - cron: "0 23 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: setup Node
+        uses: actions/setup-node@v3
+      - name: build
+        run: npm i
+      - name: execute
+        run: ./node_modules/.bin/ts-node scraper/addTodaysQuestion.js
+      - name: push
+        run: npm run git

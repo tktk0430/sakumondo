@@ -65,12 +65,12 @@ const fuga = async (date) => {
   }
 };
 
-const piyo = async (start, end) => {
+export const piyo = async (start, end) => {
   const kakomon = JSON.parse(fs.readFileSync("scraper/kakomon.json", "utf-8"));
   const existingDays = Object.keys(kakomon);
 
   const startDate = dayjs(start);
-  const endDate = dayjs(end);
+  const endDate = end ? dayjs(end) : startDate;
   for (let date = startDate; date <= endDate; date = date.add(1, "day")) {
     const target = date.format("YYYY-MM-DD");
     if (existingDays.includes(target)) continue;
@@ -80,7 +80,18 @@ const piyo = async (start, end) => {
   }
   fs.writeFileSync("scraper/kakomon.json", JSON.stringify(kakomon), () => {});
 };
-piyo("2022-08-14", "2022-08-15");
+
+export const addTodaysQuestionToGAS = async () => {
+  const today = dayjs().format("YYYY-MM-DD");
+  const question = await fuga(today);
+  const addKakomonURL =
+    "https://script.google.com/macros/s/AKfycbwm0TJOdZlRKIzousFzv130yI5lRlCUSZAeAzYtPiFCOdCQ3iFj932-Y_b55tRHinF9/exec";
+  const firstResp = await fetch(addKakomonURL, {
+    method: "POST",
+    body: JSON.stringify(question),
+  });
+  await firstResp.text();
+};
 
 //   page.on("response", async (response) => {
 //     const url = response.url();
