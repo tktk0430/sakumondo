@@ -1,9 +1,8 @@
 import dayjs from "dayjs";
 import { encode } from "../src/utils/crypto";
 import fetch from "node-fetch";
-
-const puppeteer = require("puppeteer");
-const fs = require("fs");
+import puppeteer from "puppeteer";
+import fs from "fs";
 
 const instructionToAnswerType = (instruction) => {
   if (instruction.includes("カタカナ")) {
