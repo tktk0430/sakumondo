@@ -17,5 +17,3 @@ jobs:
         run: npm i
       - name: execute
         run: ./node_modules/.bin/ts-node scraper/addTodaysQuestion.js
-      - name: push
-        run: npm run git
