@@ -3,7 +3,7 @@ import { SolvePage } from "pages/Home/SolvePage";
 import { Button } from "components/Button";
 import { isValidQuery } from "utils/handleQuery";
 import { Flex } from "components/Flex";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const MODE_MAPPER = {
   solve: "create",
@@ -39,6 +39,11 @@ const Home = () => {
       >
         {mode === "solve" ? "問題を作る" : "回答に戻る"}
       </Button>
+      <Link to="kakomon" style={{ textDecoration: "none" }}>
+        <Button color="blue" width="full" margin={{ t: 1 }}>
+          過去問
+        </Button>
+      </Link>
     </>
   );
 };
