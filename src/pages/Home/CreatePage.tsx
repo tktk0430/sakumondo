@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "components/Modal";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const MAX_SENTENCE_LENGTH = 48;
 const CreatePage = () => {
@@ -27,11 +28,9 @@ const CreatePage = () => {
     try {
       const data = { sentence, answerType, answers };
       const encodePath = encode(data);
-      const resp = await fetch(shortenURL, {
-        method: "POST",
-        body: JSON.stringify({ q: encodePath }),
-      });
-      const result = await resp.text();
+      const result = await axios
+        .post(shortenURL, JSON.stringify({ q: encodePath }))
+        .then((res) => res.data);
       setOpenURLModal(true);
       return `${window.location.href.split("?")[0]}short?key=${result}`;
     } finally {

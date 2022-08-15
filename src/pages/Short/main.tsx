@@ -1,6 +1,7 @@
 import { getOriginURL } from "api/gas";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 export const Short = () => {
   const navigate = useNavigate();
@@ -9,8 +10,9 @@ export const Short = () => {
   useEffect(() => {
     const fetchOriginURL = async () => {
       const validKey = qp.get("key");
-      const resp = await fetch(`${getOriginURL}?key=${validKey}`);
-      const q = await resp.text();
+      const q = await axios
+        .get(`${getOriginURL}?key=${validKey}`)
+        .then((res) => res.data);
       navigate({ pathname: "/", search: `?q=${q}` });
     };
     fetchOriginURL();
