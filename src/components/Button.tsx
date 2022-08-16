@@ -7,7 +7,7 @@ type TButtonProps = React.DetailedHTMLProps<
 > & {
   disabled?: boolean;
   width?: "small" | "middle" | "large" | "full";
-  color?: "red" | "green";
+  color?: "red" | "green" | "blue";
 } & { margin?: TMargin };
 
 const Button = (props: TButtonProps) => {

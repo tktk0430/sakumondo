@@ -4,6 +4,7 @@ const INITIAL_RESULT = {
   submitCount: 0,
   yourAnswer: "",
 };
+export type ResultType = typeof INITIAL_RESULT;
 
 const getAllResult = (): { [key: string]: typeof INITIAL_RESULT } => {
   const result = localStorage.getItem("result");
