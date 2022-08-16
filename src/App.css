@@ -103,13 +103,13 @@
 
 .date-panel {
   text-align: center;
-  outline: solid 0.5px gray;
   height: 3.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
   position: relative;
+  box-shadow: 0 0 0 1px gray;
 }
 
 /* button */
