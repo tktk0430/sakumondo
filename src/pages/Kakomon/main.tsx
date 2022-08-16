@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getResult, ResultType } from "utils/localStorage";
+import { Flex } from "components/Flex";
 
 export const Kakomon = () => {
   const [kakomon, setKakomon] = useState<{ [key: string]: string }>({});
@@ -37,7 +38,12 @@ export const Kakomon = () => {
 
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>過去問</h1>
+      <Flex justifyContent="center" style={{ position: "relative" }}>
+        <h1 style={{ textAlign: "center" }}>過去問</h1>
+        <Link to="/" style={{ position: "absolute", right: 0, bottom: 25 }}>
+          戻る
+        </Link>
+      </Flex>
       {Object.entries(calenderedDates).map((entry) => {
         const [yearMonth, dates] = entry;
         return (
@@ -78,45 +84,40 @@ type DatePanleProps = {
 
 const DatePanel = (props: DatePanleProps) => {
   const { isExist, q, day, result } = props;
-  const isSolving = result.clickedIndices.length > 0;
+  const isSolving = result.clickedIndices.length > 0 && !result.isCorrect;
 
   return (
-    <div
-      style={{
-        textAlign: "center",
-        outline: "solid 0.5px gray",
-        height: "3.5rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: "0.2rem",
-        backgroundColor: result.isCorrect ? "#5eec62" : "white",
-        position: "relative",
-      }}
-    >
+    <>
       {isExist ? (
         <Link
           to={`/?q=${q}`}
           style={{ textDecoration: "none", color: "black" }}
         >
-          {day}
+          <div
+            className="date-panel"
+            style={{
+              backgroundColor: result.isCorrect ? "#5eec62" : "white",
+            }}
+          >
+            {day}
+            {isSolving && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: 2,
+                  fontSize: 0.5,
+                }}
+                className="red"
+              >
+                ●
+              </div>
+            )}
+          </div>
         </Link>
       ) : (
-        <span></span>
+        <div className="date-panel" style={{ backgroundColor: "#F2F2F2" }} />
       )}
-      {!result.isCorrect && isSolving && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 2,
-            fontSize: 0.5,
-          }}
-          className="red"
-        >
-          ●
-        </div>
-      )}
-    </div>
+    </>
   );
 };
