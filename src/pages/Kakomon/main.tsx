@@ -60,6 +60,7 @@ export const Kakomon = () => {
                 const key = `${yearMonth}-${day}`;
                 return (
                   <DatePanel
+                    key={key}
                     isExist={key in kakomon}
                     q={kakomon[key]}
                     day={Number(day)}
