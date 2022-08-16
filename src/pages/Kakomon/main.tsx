@@ -92,7 +92,12 @@ const DatePanel = (props: DatePanleProps) => {
       {isExist ? (
         <Link
           to={`/?q=${q}`}
-          style={{ textDecoration: "none", color: "black" }}
+          style={{
+            textDecoration: "none",
+            color: "black",
+            display: "block",
+            position: "relative",
+          }}
         >
           <div
             className="date-panel"
@@ -101,20 +106,20 @@ const DatePanel = (props: DatePanleProps) => {
             }}
           >
             {day}
-            {isSolving && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  right: 2,
-                  fontSize: 0.5,
-                }}
-                className="red"
-              >
-                ●
-              </div>
-            )}
           </div>
+          {isSolving && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 3,
+                fontSize: "70%",
+              }}
+              className="red"
+            >
+              ●
+            </div>
+          )}
         </Link>
       ) : (
         <div className="date-panel" style={{ backgroundColor: "#F2F2F2" }} />
