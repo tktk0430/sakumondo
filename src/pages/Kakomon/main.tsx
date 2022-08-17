@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { getResult, ResultType } from "utils/localStorage";
 import { Flex } from "components/Flex";
-
+import dayjs from "dayjs";
 export const Kakomon = () => {
   const [kakomon, setKakomon] = useState<{ [key: string]: string }>({});
 
@@ -26,7 +26,9 @@ export const Kakomon = () => {
     return monthReverse.reduce(
       (obj, x) =>
         Object.assign(obj, {
-          [x]: [...Array(31).keys()].map((i) => String(i + 1).padStart(2, "0")),
+          [x]: [...Array(dayjs(x).daysInMonth()).keys()].map((i) =>
+            String(i + 1).padStart(2, "0")
+          ),
         }),
       {} as { [key: string]: string[] }
     );
