@@ -82,14 +82,14 @@ export const piyo = async (start, end) => {
   fs.writeFileSync("scraper/kakomon.json", JSON.stringify(kakomon), () => {});
 };
 
-export const addTodaysQuestionToGAS = async () => {
+export const addTodaysQuestionToGAS = async (secret) => {
   const today = dayjs().format("YYYY-MM-DD");
   const question = await fuga(today);
   const addKakomonURL =
     "https://script.google.com/macros/s/AKfycbwm0TJOdZlRKIzousFzv130yI5lRlCUSZAeAzYtPiFCOdCQ3iFj932-Y_b55tRHinF9/exec";
   const firstResp = await fetch(addKakomonURL, {
     method: "POST",
-    body: JSON.stringify(question),
+    body: JSON.stringify({ secret, data: question }),
   });
   await firstResp.text();
 };

@@ -16,4 +16,4 @@ jobs:
       - name: build
         run: npm i
       - name: execute
-        run: ./node_modules/.bin/ts-node scraper/addTodaysQuestion.js
+        run: ./node_modules/.bin/ts-node scraper/addTodaysQuestion.js ${{secrets.ADD_KAKOMON_SECRET}}

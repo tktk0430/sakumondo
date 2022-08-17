@@ -1,3 +1,4 @@
 import { addTodaysQuestionToGAS } from "./scraper";
+import { argv } from "process";
 
-addTodaysQuestionToGAS();
+addTodaysQuestionToGAS(argv[2]);
