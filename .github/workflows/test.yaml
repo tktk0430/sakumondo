@@ -1,0 +1,17 @@
+name: test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: setup Node
+        uses: actions/setup-node@v3
+      - name: build
+        run: npm i
+      - name: execute
+        run: ./node_modules/.bin/ts-node scraper/hoge.js ${{secrets.ADD_KAKOMON_SECRET}}
