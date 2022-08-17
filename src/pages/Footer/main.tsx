@@ -66,6 +66,14 @@ const Footer = () => {
             開かなかった文字数が得点になります。できるだけ文字を開けずにクイズに正解しましょう!
           </li>
         </ol>
+        <hr />
+        <h4 style={{ textAlign: "center" }}>お問合せ</h4>
+        <div>
+          当サイトは個人が運営するファンサイトであり、本家
+          <a href="https://mondo.quizknock.com/">mondo</a>
+          の運営元であるQuizKnock様とは一切関係ありません。
+        </div>
+        <br />
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
             onClick={() => setIsModalOpen(false)}
