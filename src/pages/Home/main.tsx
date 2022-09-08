@@ -39,11 +39,6 @@ const Home = () => {
       >
         {mode === "solve" ? "問題を作る" : "回答に戻る"}
       </Button>
-      <Link to="kakomon" style={{ textDecoration: "none" }}>
-        <Button color="blue" width="full" margin={{ t: 1 }}>
-          過去問
-        </Button>
-      </Link>
     </>
   );
 };

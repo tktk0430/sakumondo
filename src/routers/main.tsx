@@ -8,7 +8,7 @@ export const MainRouter = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="short" element={<Short />} />
-      <Route path="kakomon" element={<Kakomon />} />
+      <Route path="kako" element={<Kakomon />} />
     </Routes>
   );
 };
