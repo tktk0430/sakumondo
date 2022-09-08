@@ -3,7 +3,7 @@ import { SolvePage } from "pages/Home/SolvePage";
 import { Button } from "components/Button";
 import { isValidQuery } from "utils/handleQuery";
 import { Flex } from "components/Flex";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const MODE_MAPPER = {
   solve: "create",
