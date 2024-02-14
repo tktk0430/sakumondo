@@ -41,7 +41,7 @@ const Footer = () => {
             <img src={gitIcon} alt="github link" height="32px" />
           </a>
           <a
-            href="https://twitter.com/nnnTAKUuuu"
+            href="https://twitter.com/fibonaccci40"
             target="_blank"
             rel="noopener noreferrer"
           >
